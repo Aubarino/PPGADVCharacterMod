@@ -1,0 +1,52 @@
+- - - - - - - - - -
+
+open "~ CONFIG ~.cs" in any text editor and read the agreement in the code of the file.
+then replace the "false" with "true" if you agree to it, leave the end line character at the end, aka something like "true;"
+if you wish to play the mod outside of SFW mode.
+
+- - - - - - - - - -
+
+==== NOTICE ====================================================
+================================================================
+This mod defaults to SFW Mode, aka all NSFW features default come disabled / not in the mod.
+
+And via the Config being a Code File, you need to EDIT THE MOD LOCALLY ON YOUR SYSTEM YOURSELF technically, to access NSFW Mode.
+So therefor- using this mod in NSFW Mode is entirely your own modification,
+and blame of such content- cannot be redirected to me Aubarino, as it is your own modification on your own computer.
+================================================================
+================================================================
+
+It is impossible to reupload this mod to the steam workshop, don't try,
+I have anti-reuploading code in this mod.
+But talk to Aubarino if you wish to make a SFW Mod with the systems in this mod.
+
+- - - The discord server of the creator of this mod, with also a help channel 'n etc.
+https://discord.gg/brxg5zPz6S
+
+- - - The Patreon of the creator of this mod if you wish to support her.
+https://www.patreon.com/Aubarino
+
+- - - - - - - - - -
+
+view "update notes.txt" for info on the current update and its changes.
+
+
+
+=================================================
+My reasoning behind uploading it after all this time.
+=================================================
+
+This mod has not been on the workshop- since its creation years ago.
+
+But with more in-depth changes and automatic censoring to even the ingame category-
+It has been decided to upload it to the workshop, to be a fitting upload for April fools.
+
+This mod may be referred to as the "Sex Mod", but by default it simply includes a lot of
+advanced mechanics and interactions, that are not inherently NSFW.
+
+as-is it is a mod worthy of uploading, as the quality of additions in this mod-
+still stand today even after all these years.
+
+and the cash-grab studios that exist in the PPG community besides me, suck ass.
+
+=================================================

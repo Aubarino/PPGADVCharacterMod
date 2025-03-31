@@ -1,0 +1,26 @@
+{
+  "Name": "Advanced Character Mod",
+  "Author": "Aubarino",
+  "Description": "A mod with possibly the most advanced limb and limb addon systems ever. The original mod with Jiggle Physics, full destruction support, and if editted to be NSFW Mode- this is the PPG Sex Mod.",
+  "ModVersion": "1.5",
+  "GameVersion": "1.23+",
+  "ThumbnailPath": "Icon.png",
+  "EntryPoint": "Mod.Mod",
+  "Tags": [],
+  "Scripts": [
+    "AAS.cs",
+    "~ CONFIG ~.cs",
+    "ADVCassets.cs",
+    "classicCB.cs",
+    "MainClass.cs",
+    "Genitals.cs",
+    "AchievementJoke.cs",
+    "LimbInspectOverhaul.cs",
+    "PopupEntry.cs",
+    "CosmicEffect.cs",
+    "AubsClothing.cs"
+  ],
+  "Active": true,
+  "UGCIdentity": null,
+  "CreatorUGCIdentity": null
+}

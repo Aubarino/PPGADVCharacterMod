@@ -1,0 +1,46 @@
+In this folder
+"assets"
+Are multiple template characters inside the Sex Mod, including the individual textures used for parts of the body.
+And More templates, for those parts!
+I use the program Aseprite, I May link my copy in the future as I purchased it and then Cracked it, but until I do more Legal research-
+Just either buy Aseprite to open the template file or work-off the textures already In Here and make your own.
+If you wish to make your own sex-mod addon.
+
+GIVE MAJOR CREDIT THOUGH
+or ima Smack you bitchass.
+
+Define your own textures in the SexAssets.cs file, add new entries and then you can add them to a human same as any other part of that type,
+just by changing the number for the ID, for example > (normal dicks use an ID for the base of it, the mid segments and the tip. the balls have their own ID!)
+
+There's also stuff like ADV Dicks, for more advanced dicks 'n such that allow full editing of every segment.
+the definition of these textures and their location is dynamic- so all you need to do is execute a method named "CollectDickADV"
+with the ID you want for it and the total amount of segments,
+such as :
+(in the "dick_adv" folder, lets say that you've made some segments including the base and the tip and everything inbetween,
+and your last segment aka the tip- is named "dickadv_2_8", then you'd do something like "DickADV_MyCoolDick = CollectDickADV(2, 8);"
+also keep in mind stuff like defining that variable in advance as a Sprite[] and also putting that above code in the Init method in SexAssets.cs
+if you're a complete idiot and cannot understand that about c# yet...)
+
+there are many "ref" images too- that are Full non-segmented versions of Some of the textures.
+the process of segmenting things such as Dicks and Tails 'n etc, is an odd learning curve but involves both keeping parts of textures that connect around the edge
+for more seamless rotation, and also keeping as much of a sphere-like area of the texture around where it would bend to also keep it seamless,
+also keeping in-mind things like :
+.spawning order of the segments / parts
+.glitchy unity bullshit involving layering and overriding in the code
+.compensation around edges that are joints
+.the joint of a segment / part being the center of the image
+.segment / part offsets and in-code definitions and how to counter this well in the texure
+.keeping your own "ref" of the full image so you can compare ingame to the segments and the full image to adjust them 'n get a better result-
+also it is generally easier with segmented parts if you split up an image that you made in-full and round parts on joints carefully - carry parts over from the edges of other segments,
+i may make a tutorial on this if you reallllyyy want, or just make one yourself and i'll give my opinion in the comments if you send me it too! :D
+
+Fun Useful Fact for making addons of this mod / clone mods / mods that use my code with credit :
+Name an Object "Fuckable" something, to make it fuckable with dicks.
+If this has the Genital script on it then it gains Arousal too! and it doesn't even need to be from the same mod! just gotta have the same code in it.
+YOU NEED TO DEFINE ArousalNets though! if it has the Genital script!
+That's rather advanced so i'd recommend just using the code I put in my humans that does that for you :
+"SetArousalNets(GetArousalNets(GenderHuman));" along-side the rest of the code in my humans so-far or whatever you want really, idk...
+you can make something "Fuckable" by simply doing "MakeFuckable(gameObject);" such as "MakeFuckable(limb.gameObject);" in the limb checks-
+Inside the SexMain.cs class!
+
+

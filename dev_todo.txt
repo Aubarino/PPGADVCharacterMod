@@ -1,0 +1,14 @@
+> add damage variants
+> add ears as spawning objects (rotation is a bit wacko)
+> make fish/shark female variant skin
+> add general overlay part for stuff like masks, thighs and all sorts of cool stuff
+> finish canine character and maybe redesign head of canine for both sex's.
+FIX BUG WITH SPAWNING MULTIPLE PARTS AT ONCE WHEN COPIED AND PASTED
+add canine female
+add dildos
+add overlay damage decals
+
+
+IGNORE THIS FILE, I FORGOT TO DELETE OR CHANGE THIS,
+IMA LEAVE THIS HERE AS A RECORD OF THE PAST, CAUSE EH I'M WACKY LIKE THAT
+:)

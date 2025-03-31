@@ -1,0 +1,148 @@
+
+THIS FILE IS VERY VERY VERY OLD,
+MANY YEARS OLD-
+AND IS ENTIRELY OUTDATED,
+SO DISREGARD A LOT OF THIS FILE.
+
+IF YOU ARE READING THIS FROM A COPY DOWNLOADED FROM THE STEAM WORKSHOP-
+READ THE READ ME.txt FILE INSTEAD PLEASE,
+STOP READING THIS FILE
+
+
+
+"Sex Mod" help addition log / guide for Everything.
+
+ - - - - - - - - - - - - - - - - - - - - - - -
+= = = = Part Fun-Facts and Useful Info = = = =
+
+My Jiggle Physics Algorithm is built into the GenitalPart class.
+
+Try not to confuse the "Genital" class from the "GenitalPart" class.
+"Genital" Is the Human Limb / Host for all the Genital Parts to be attached to and be managed by,
+And "GenitalPart" Is the class for the actual individual Genital Parts.
+May wanna keep this in mind for later.
+
+I call all this "Genital" 'n etc, but besides whatever Term I use in the code and conversation-
+It's more a Hand-Made Limb Attachment Framework. So don't think of it as any less then that! :)
+This shit is Overly Engineered.
+
+Genital Parts are created, synced and managed by the Genital class. found via Instance or PartChainHost in common forms, But have their own code that runs Per Genital Part too!
+
+When the PartChainHost or "Instance" - the general host GameObject of the Genital Part... bassically hits 0 health,
+Then a Check is ran per-part attached to it- by each part. that normally just Delete themselves after the Human Limb Death or whatever if that class is detected,
+But in specific scenarios you can define a Damaged "dmg" version of it, such as Tails! that instead  of destroying the Genital Part- changes the texture.
+Then when the check by the Host GameObject / PartChainHost / Instance / whatever you'd call it- to check if it's been healed- and creates new instances of everything attached to that limb-
+then it Destroys itself at the same time as creating a New normal one. It's a bit odd but works, this may have Been changed before you looked at this or maybe i'm just lazy.
+
+The Dick Enter method that runs off the Penetration Check stuff on the Tip of a Dick, Does some stuff like runs a method to add Arousal to the body, but also sends out a Signal to what it penetrates.
+Allowing for cross-mod compatibility options possibly, not well tested though.
+
+ - - - - - - - - - - - - - - -
+= = = = Genital Parts = = = =
+
+. "Dick" A penis, can be added onto GameObjects- defined by a bool and a set of variables per-Genital script instance on such a GameObject.
+Consists of "DickBase" at the start- going forward relative to the Right, "DickMid" a simple-textured segment based GameObject that fills in the gaps between the Base and the Tip of the dick.
+"DickTip" is the last "DickMid" on a Dick, having both a connection to the 2nd last, last and Original Parent GameObjects, This is why "PartChainHost" Exists in the "GenitalPart" class originally.
+"DickTip" also handles multiple bits of code such as Particles, the Penetration Checks and actual Penetration.
+The "Dick" may seem like both Very Simple yet also Very Complex,
+As it's a blend of both a Powerful Modular code structuring approach and Customizable being what Defines it and what it's Built Around.
+
+This is further expanded on with "Adv Dicks", A Genital Part that's simply a Different Approach to the same algorithm.
+Unlike Normals Dicks that use 3 Textures- "Adv Dicks" are abstract and are defined by (setting "DModelAdv" to true In the GameObject's Genital Script, and setting "DModelAdvSprites" to an array of Sprites!?)
+You still gotta set the Dick Length 'n etc to something- This just overrides that- but uses the same systems so DONT cut corners with setting variables!!!!!!!!!
+In SexAssets there's a method named "CollectDickADV" and you can see it in-action used for the pre-existing Adv Dicks, It simply returns an array For You-
+But you gotta do some extra Formatting on how you're texture is actually named 'n where it is - what you tell the method.
+Read more about this inside the "SexAssets" class / struct.
+
+. "Tits" Made along-side my jiggle physics algorithm and custom joint system with these "Genital" thingos 'n bla bla, their basic yet do what they gotta.
+they consist of a "TitBody" GameObject and a "TitTip". their not attached to each-other as it avoids clipping- and It was also made Before that functionality even existed here.
+They use practically Completely Default values in my jiggle physics algorithm- as their built Around the tits!!! O_O
+
+. "Balls" A Super simple seperately defined dangly pair of testicles,
+This is seperate to the Dick defintion bullshit- don't ask me why lol.
+EVER WANTED SOMEONE WITH A PUSSY AND BALLS FOR NO REAL REASON!?!?! NOW YOU CAN! O.O
+
+. "Blush" A Super simple Genital Part with canceled out jiggle - No Jiggle Physics,
+that is normally put onto the Face, and is a Great example of another cool bit of functionality I made for all this!
+"ArousalRequired" !
+Arousal is applied to your entire body- inconsistently according to how sensative stuff is 'n bla bla bla,
+And "ArousalRequired" in a Genital Part simply Stops that Part from rendering If you don't have Equel to or Above the set amount required.
+Allowing for stuff like Blushing "GenitalParts"!
+
+. "Tail", all you really need to define for this is If it has a tail, and the "TailModel".
+Nothing special really besides a Bug Idk how to patch that I guess is a feature now- where erections cause it to move a little...
+Oh 'n I also created "RotationalMultiplier" for this, and via that has now become a general GenitalPart value you can define.
+Its usage is In Its Name, And is used for stuff like Inverting Rotation-Data by setting it to -1 in the Jiggle Physics so stuff works well if it's on the Back of objects 'n etc.
+
+. "Ears" EarLeft and EarRight are simple GenitalParts with basic Jiggle. mainly made for specific Anthro Character Designs.
+All these definitions for limb attachments are Fully Customizable 'n such if you wanna look more into the code-
+This is just another example of how you can do whatever you want with my system here Easily with less effort 'n a better result.
+As I've done the effort For You here
+
+. "Overlay" A POWERFUL GenitalPart that allows for easy creation of Overlays 'n simple parts without needing to edit the code majorly except making a new human!!!
+A summery of SOME of the options you can choose from to edit are:
+OverlayModel, OverlayLayer, OverlayOffset, OverlaySortNum, OverlayMaterial (for stuff like glow!), OverlayColour...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+= = = = How to define your own entirely new Genital Parts! = = = =
+
+To Create your own Genital Parts with EVEN MORE customization and power, 
+Look into the "Genitals" class 'n look at the "CreatePart" method.
+It's used in the initial creation and spawning of Every Genital Part.
+When you're ready : Make a new bool for your part at the top-
+And put a check in the "InitCreationChecks" method, something like "if (Dick) BodyPartInit("Dick", true);"
+"Dick" on the left here being your bool, "Dick" on the right being your GenitalPart Name inside BodyPartInit, and the "true" on the right being if it's a NSFW Genital Part or not!!!!
+IMPORTANT : If your genital part is nsfw- SET THIS TO TRUE, otherwise you may endup being ratioed on twitter or something idfk..
+
+Oh yeah 'n also make a new Switch Case entry inside the "BodyPartInit" Method, named your GenitalPart Name,
+Then you can do whatever you want in there- look at the other definitions that already exist in there for reference
+on what you can do 'n maybe copy stuff if you realllyyy don't know how to code at all decently.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+= = = = How to define your own assets in "SexAssets" to refernece in your code = = = =
+
+The top half of the c# file under "struct SexAssets", is where you'd define your variables in c#.
+Below "static void Init()" you'd Set your variables to what you wanna have them as, such as your textures.
+
+Here's some Examples...
+
+
+//Define Human Variables
+    public static Texture2D FemaleSkin;
+    public static Texture2D FemaleFlesh;
+    public static Texture2D FemaleBone;
+
+//Set Human Variables
+    FemaleSkin = ModAPI.LoadTexture("assets/default_skin_female.png");
+    FemaleFlesh = ModAPI.LoadTexture("assets/default_flesh_female.png");
+    FemaleBone = ModAPI.LoadTexture("assets/default_bone_female.png");
+
+
+For something like a ADV Dick, this is what you'd do :
+
+//Define ADV Dick Variables
+    public static Sprite[] DickADV_Canine;
+    
+//Set ADV Dick Variables
+    DickADV_Canine = CollectDickADV(1, 6); 
+
+
+And for a Normal Genital Part, Also a Create Example of a Sprite Array :
+
+//Define Genital Part Variables
+    public static Sprite[] Blush;
+
+//Set Genital Part Variables
+    Blush = new[]{
+        ModAPI.LoadSprite("assets/blush_1.png"),
+        ModAPI.LoadSprite("assets/blush_2.png"),
+        ModAPI.LoadSprite("assets/blush_3.png")
+    };
+
+
+You could access the first entry in the above Sprite Array with Blush[0]
+SexAssets.Blush[0] if you're using it outside of the SexAssets file.
+You could replace that variable with whatever you want, such as an Int variable-
+Just remember that it starts at 0, not 1.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
