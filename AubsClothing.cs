@@ -26,13 +26,13 @@ public class AubClothingObj : MonoBehaviour //add to a clothing object
     }
     
     public void OnCollisionEnter2D(Collision2D collision){
-        Debug.Log("Trying clothing ("+clothingVisibleName+") on ("+collision.gameObject.name+")");
+        //Debug.Log("Trying clothing ("+clothingVisibleName+") on ("+collision.gameObject.name+")");
         if (collision.gameObject.GetComponent<LimbBehaviour>() == null) return;
         if (!setup){
             Debug.Log("[X] Clothing not fully spawned in yet?? cannot apply");
             return;
         }
-        Debug.Log("Trying to apply clothing ("+clothingVisibleName+") to Person owner of limb ("+collision.gameObject.name+")");
+        Debug.Log("Trying to apply clothing ("+clothingVisibleName+")");
         AubClothing clothingBehav = collision.transform.root.gameObject.GetComponent<AubClothing>();
 
         if (clothingBehav == null){
@@ -82,7 +82,7 @@ public class AubClothing : MonoBehaviour //add to a human's main object- not lim
             clothingActiveTex = new Texture2D[]{};
         }
         Setup = true;
-        Debug.Log("Attempting to apply clothing. =====");
+        //Debug.Log("Attempting to apply clothing. =====");
         for(int i = 0; i < clothingActiveSlots.Length; i++){
             if (clothingActiveIDs[i] == clothingID || clothingActiveSlots[i] == clothingSlot){
                 Setup = false;

@@ -10,7 +10,10 @@ public struct ADVCassets
 {
     public static AudioClip[] WetSlapNormal;
     public static AudioClip[] WetSlapWeak;
+
     public static AudioClip[] CumAudio;
+    public static AudioClip[] InflationAudio;
+
     public static AudioClip[] MoanMale;
     public static AudioClip[] MoanFemale;
     public static AudioClip[] MoanPerson;
@@ -20,6 +23,8 @@ public struct ADVCassets
     public static AudioClip[] CosmicRegenAudio;
     public static AudioClip[] MoanCosmicMale;
     public static AudioClip[] MoanCosmicFemale;
+    public static AudioClip[] MoanGoblinMale;
+    public static AudioClip[] MoanGoblinFemale;
 
     public static Texture2D[] ParticleTextures;
 
@@ -28,6 +33,8 @@ public struct ADVCassets
     public static Sprite[] ClothingObjTextures;
     public static int[] ClothingSlotIds;
     public static string[] ClothingNameIds;
+    public static string[] ClothingDescs;
+    public static bool[] ClothingNsfwStatus;
 
     public static Texture2D FemaleSkin;
     public static Texture2D FemaleFlesh;
@@ -60,6 +67,9 @@ public struct ADVCassets
     public static Texture2D CosmicFleshMale;
     public static Texture2D CosmicFleshFemale;
     public static Texture2D CosmicBone;
+
+    public static Texture2D GoblinSkinFemale;
+    public static Texture2D GoblinSkinMale;
 
     public static Sprite DevNullSprite;
 
@@ -109,7 +119,7 @@ public struct ADVCassets
         DickADV_Fish = CollectDickADV(2, 8);
         DickADV_Proto = CollectDickADV(3, 5);
         DickADV_Snake = CollectDickADV(4, 7);
-        Overlays = GenOverlays(16); //sets up overlays from "assets\overlays", increasing in number up to the max here.
+        Overlays = GenOverlays(18); //sets up overlays from "assets\overlays", increasing in number up to the max here.
         ParticleTextures = GenParticleTextures(5);
 
         ClothingIconTextures = new Sprite[]{};
@@ -117,11 +127,19 @@ public struct ADVCassets
         ClothingObjTextures = new Sprite[]{};
         ClothingSlotIds = new int[]{};
         ClothingNameIds = new string[]{};
+        ClothingDescs = new string[]{};
+        ClothingNsfwStatus = new bool[]{};
 
-        LoadClothingTextureSet("choker","Choker",1); //1 is neck
-        LoadClothingTextureSet("collar","Collar",1);
-        LoadClothingTextureSet("sunglasses","Sunglasses",2); //2 is eyes
-        LoadClothingTextureSet("catpaw","Cat Paw Gloves",3); //3 is hands
+        LoadClothingTextureSet("choker","Choker",1,"A Choker fashion accessory for the neck"); //1 is neck
+        LoadClothingTextureSet("collar","Collar",1,"A Leather Collar with a little bell");
+        LoadClothingTextureSet("sunglasses","Sunglasses",2,"Shades for looking cool"); //2 is eyes
+        LoadClothingTextureSet("catpaw","Cat Paw Gloves",3,"Nya nya nya! paw gloves"); //3 is hands
+        LoadClothingTextureSet("partyglasses","Party Glasses",2,"Pink plastic party glasses");
+        LoadClothingTextureSet("fakebeard","Fake Beard",1,"A low quality fake beard, feels like plastic");
+        LoadClothingTextureSet("balaclava","Balaclava",4,"A Balaclava, we need to put a team together >:)"); //4 is head
+        LoadClothingTextureSet("funnyeye","Plastic Eye",2,"A funny plastic eye for gags and jokes");
+        LoadClothingTextureSet("blindfold","Blindfold",2,"A Blindfold, for if you need to make someone unable to see");
+        LoadClothingTextureSet("leatherjacket","Leather Jacket",5,"A cool leather jacket"); //5 is shirt
 
         FleshLights = new[]{
             ModAPI.LoadSprite("assets/objs/fleshlight_1.png")
@@ -142,6 +160,8 @@ public struct ADVCassets
             ModAPI.LoadSound("sfx/wetslap_weak3.mp3")
         };
         CumAudio = CollectAudioArray("cum",4);
+        InflationAudio = CollectAudioArray("inflation",2);
+        
         MoanMale = CollectAudioArray("moan_male",4);
         MoanFemale = CollectAudioArray("moan_female",7);
         MoanPerson = CollectAudioArray("moan_person",4);
@@ -151,6 +171,8 @@ public struct ADVCassets
         CosmicRegenAudio = CollectAudioArray("cosmic",4);
         MoanCosmicMale = CollectAudioArray("moan_male_cosmic",4);
         MoanCosmicFemale = CollectAudioArray("moan_female_cosmic",4);
+        MoanGoblinMale = CollectAudioArray("moan_male_goblin",5);
+        MoanGoblinFemale = CollectAudioArray("moan_female_goblin",5);
 
         FemaleSkin = ModAPI.LoadTexture("assets/default_skin_female.png");
         FemaleFlesh = ModAPI.LoadTexture("assets/default_flesh_female.png");
@@ -184,6 +206,9 @@ public struct ADVCassets
         CosmicFleshFemale = ModAPI.LoadTexture("assets/flesh_cosmic_female.png");
         CosmicBone = ModAPI.LoadTexture("assets/bone_cosmic.png");
 
+        GoblinSkinFemale = ModAPI.LoadTexture("assets/default_skin_goblin_female.png");
+        GoblinSkinMale = ModAPI.LoadTexture("assets/default_skin_goblin_male.png");
+
         DevNullSprite = ModAPI.LoadSprite("assets/dev_void.png");
 
         DildoIcons = new[]{
@@ -192,7 +217,8 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/objs/dildo_icon3.png"),
             ModAPI.LoadSprite("assets/objs/dildo_icon4.png"),
             ModAPI.LoadSprite("assets/objs/dildo_icon5.png"),
-            ModAPI.LoadSprite("assets/objs/dildo_icon6.png")
+            ModAPI.LoadSprite("assets/objs/dildo_icon6.png"),
+            ModAPI.LoadSprite("assets/objs/dildo_icon7.png")
         };
         DildoMain = new[]{
             ModAPI.LoadSprite("assets/objs/dildobase.png"),
@@ -202,32 +228,40 @@ public struct ADVCassets
         TitBases = new[]{
             ModAPI.LoadSprite("assets/tit_1_body.png"),
             ModAPI.LoadSprite("assets/tit_2_body.png"),
-            ModAPI.LoadSprite("assets/tit_3_body.png")
+            ModAPI.LoadSprite("assets/tit_3_body.png"),
+            ModAPI.LoadSprite("assets/tit_4_body.png"),
+            ModAPI.LoadSprite("assets/tit_5_body.png")
         };
         TitTips = new[]{
             ModAPI.LoadSprite("assets/tit_1_tip.png"),
             ModAPI.LoadSprite("assets/tit_2_tip.png"),
-            ModAPI.LoadSprite("assets/tit_3_tip.png")
+            ModAPI.LoadSprite("assets/tit_3_tip.png"),
+            ModAPI.LoadSprite("assets/tit_4_tip.png"),
+            ModAPI.LoadSprite("assets/tit_5_tip.png")
         };
 
         DickBases = new[]{
             ModAPI.LoadSprite("assets/dick_1_base.png"),
-            ModAPI.LoadSprite("assets/dick_2_base.png")
+            ModAPI.LoadSprite("assets/dick_2_base.png"),
+            ModAPI.LoadSprite("assets/dick_3_base.png")
         };
         DickMids = new[]{
             ModAPI.LoadSprite("assets/dick_1_mid.png"),
-            ModAPI.LoadSprite("assets/dick_2_mid.png")
+            ModAPI.LoadSprite("assets/dick_2_mid.png"),
+            ModAPI.LoadSprite("assets/dick_3_mid.png")
         };
         DickTips = new[]{
             ModAPI.LoadSprite("assets/dick_1_tip.png"),
-            ModAPI.LoadSprite("assets/dick_2_tip.png")
+            ModAPI.LoadSprite("assets/dick_2_tip.png"),
+            ModAPI.LoadSprite("assets/dick_3_tip.png")
         };
         DickBalls = new[]{
             ModAPI.LoadSprite("assets/dick_1_balls.png"),
             ModAPI.LoadSprite("assets/dick_2_balls.png"),
             ModAPI.LoadSprite("assets/fish_balls.png"),
             ModAPI.LoadSprite("assets/proto_balls.png"),
-            ModAPI.LoadSprite("assets/snake_balls.png")
+            ModAPI.LoadSprite("assets/snake_balls.png"),
+            ModAPI.LoadSprite("assets/dick_3_balls.png")
         };
 
         Blush = new[]{
@@ -238,7 +272,9 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/blush_5.png"),
             ModAPI.LoadSprite("assets/blush_6.png"),
             ModAPI.LoadSprite("assets/blush_7.png"),
-            ModAPI.LoadSprite("assets/blush_8.png")
+            ModAPI.LoadSprite("assets/blush_8.png"),
+            ModAPI.LoadSprite("assets/blush_9.png"),
+            ModAPI.LoadSprite("assets/blush_10.png")
         };
         LoveEyes = new[]{
             ModAPI.LoadSprite("assets/loveeyes_1.png")
@@ -251,7 +287,8 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/ear_1_right.png")
         };
         EarLarge = new[]{
-            ModAPI.LoadSprite("assets/ear_large_1.png")
+            ModAPI.LoadSprite("assets/ear_large_1.png"),
+            ModAPI.LoadSprite("assets/ear_large_2.png")
         };
 
         TailStart = new[]{
@@ -328,7 +365,7 @@ public struct ADVCassets
         return(TempParticles);
     }
 
-    public static void LoadClothingTextureSet(string clothingName,string visibleName = "undefined",int clothingSlotID = 0){
+    public static void LoadClothingTextureSet(string clothingName,string visibleName = "undefined",int clothingSlotID = 0,string Description = "no description",bool nsfwClothing = false){
         //Texture2D[] TempParticles = new Texture2D[] {};
         if(AAS.BootCore){
             ClothingObjTextures = ClothingObjTextures.Concat(new[] {ModAPI.LoadSprite("assets/clothing/" + clothingName + ".png")}).ToArray();
@@ -336,6 +373,8 @@ public struct ADVCassets
             ClothingTexTextures = ClothingTexTextures.Concat(new[] {ModAPI.LoadTexture("assets/clothing/" + clothingName + "_tex.png")}).ToArray();
             ClothingSlotIds = ClothingSlotIds.Concat(new []{clothingSlotID}).ToArray();
             ClothingNameIds = ClothingNameIds.Concat(new []{visibleName}).ToArray();
+            ClothingDescs = ClothingDescs.Concat(new []{Description}).ToArray();
+            ClothingNsfwStatus = ClothingNsfwStatus.Concat(new []{nsfwClothing}).ToArray();
         }
         //return(TempParticles);
     }
@@ -350,4 +389,5 @@ public struct ADVCassets
         }
         return(TempAudios);
     }
+    
 }

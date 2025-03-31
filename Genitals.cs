@@ -42,6 +42,7 @@ public class LimbAddon : MonoBehaviour //add to a human limb.
     //tit variables
     public bool Tits = false;
     public int TitsModel = 1;
+    public float TitsJiggleAmt = 1; //the jiggle multi of the tits
 
     //balls variables
     public bool Balls = false;
@@ -81,12 +82,18 @@ public class LimbAddon : MonoBehaviour //add to a human limb.
     public int BlushModel = 1; //NEED to define this by-hand if CanBlush is true.
     public int BlushSortOrder = 1;
 
+    //freaky stuff
+    public float Inflation = 0; //the total inflation size bias
+    public float InflationEnergy = 0; //the amount of inflation left to go into the size
+    public float InflationRateDelay = 0.03f; //this value gets cascadingly faster, so be careful
+    public bool Growing = false;
+
     //arousal variables
     public GameObject[] ArousalNetwork = new GameObject[] {}; //used for pleasure expression such as blushing, shares Arousal variable across multiple objects.
     public int Arousal = 0; //general variable for all limbs that have genital code attached, DO NOT EDIT BY-HAND, this desyncs as-is with the timer per-limb sometimes too.
     public float ArousalDrain = 1.7f; //this limb's specific Arousal drain speed in seconds.
     public int OrgasmPeak = 175; //the cap of Arousal that triggers orgasm, used in certain things only
-    public float OrgasmMultiplier = 5f; //makes orgasms more powerful, aka lasts longer
+    public float OrgasmMultiplier = 5f; //makes orgasms more powerful, aka drains faster
     private float LastOrgasmTickTime = 0; //used for time calc relating to orgasm ending time
     public float LastCumTickTime = 0; //used for time calc relating to orgasm cum ticks
     private float LastADrainTime = 0; //used for time calc relating to drain speed
@@ -141,13 +148,28 @@ public class LimbAddon : MonoBehaviour //add to a human limb.
     }
 
     private void CreateContextOptions(){
-        DefinePoses();
-        List<ContextMenuButton> buttons9 = Phys.ContextMenuOptions.Buttons;
-        ContextMenuButton contextMenuButton9 = new ContextMenuButton((Func<bool>) (() => (GetComponent<LimbBehaviour>().Person.OverridePoseIndex != 9)), "startHump", "Humping pose", "Forces the humping animation override", new UnityAction[1]{
-            (UnityAction) (() => GetComponent<LimbBehaviour>().Person.OverridePoseIndex = 9)
-        });
-        contextMenuButton9.LabelWhenMultipleAreSelected = "Humping pose";
-        buttons9.Add(contextMenuButton9);
+        List<ContextMenuButton> contexbuttonlist = Phys.ContextMenuOptions.Buttons;
+        if (!IsDildo){
+            DefinePoses();
+            ContextMenuButton contextMenuButtonHumping = new ContextMenuButton((Func<bool>) (() => (GetComponent<LimbBehaviour>().Person.OverridePoseIndex != 9)), "startHump", "Humping pose", "Forces the humping animation override", new UnityAction[1]{
+                (UnityAction) (() => GetComponent<LimbBehaviour>().Person.OverridePoseIndex = 9)
+            });
+            contextMenuButtonHumping.LabelWhenMultipleAreSelected = "Humping pose";
+            contexbuttonlist.Add(contextMenuButtonHumping);
+        }
+
+        if (Config.NSFW_MODE && Config.Inflation){
+            ContextMenuButton menuButtonInflation = new ContextMenuButton((Func<bool>) (() => (true)),
+            "inflate", "Inflation", "Inflates the Limb Addon", new UnityAction[1]{
+                (UnityAction) (() => {
+                    GetComponent<LimbAddon>().InflationEnergy += 0.5f;
+                    GetComponent<LimbAddon>().Growing = true;
+                })
+            });
+
+            menuButtonInflation.LabelWhenMultipleAreSelected = "Inflation";
+            contexbuttonlist.Add(menuButtonInflation);
+        }
     }
 
     public void DefinePoses(){
@@ -245,6 +267,10 @@ public class LimbAddon : MonoBehaviour //add to a human limb.
             if (ErectionAmp > -1) ErectionAmp -= ErectionSpeed;
         }
 
+        if (Inflation < (InflationEnergy - 0.02f)){
+            Inflation += (InflationEnergy - Inflation) * InflationRateDelay;
+        }else Growing = false;
+
         //if the human is healed after LimbAddon are destroyed- bring them back.
         if (!IsDildo && !DupeSpawned){
             if (GenitalsDestroyed && !(Instance.GetComponent<LimbBehaviour>().Health < 0.0001f)) {
@@ -272,11 +298,16 @@ public class LimbAddon : MonoBehaviour //add to a human limb.
                 Sprite DickBaseSprite = ADVCassets.DickBases[DickModel - 1];
                 if (DModelAdv) DickBaseSprite = DModelAdvSprites[0];
                 Vector3 DickSpawnPos = new Vector3(0.12f,-0.10f);
-                ObjectPassOut = CreatePart("DickBase", DickBaseSprite, "Default", (DickSpawnPos + DickOffsetVari), Instance, Instance, 999);
-                var GenitPartTemp = ObjectPassOut.GetComponent<LimbAddonPart>();
+                //Debug.Log("trying to create dick - start 1");
+                GameObject DickBase = CreatePart("DickBase", DickBaseSprite, "Default", (DickSpawnPos + DickOffsetVari), Instance, Instance, 999);
+                ObjectPassOut = DickBase;
+                DickBase.GetComponent<LimbAddonPart>().CanGrow = true;
+                var GenitPartTemp = DickBase.GetComponent<LimbAddonPart>();
+                //Debug.Log("trying to create dick - start 2");
                 GenitPartTemp.JiggleRange = 10f;
                 GenitPartTemp.JiggleGravity = 5f;
                 GenitPartTemp.JiggleAmbpli = 0.8f;
+                //Debug.Log("trying to create dick");
                 for(int i = 1; i <= DickLength; i++){
                     Sprite DickTip = ADVCassets.DickTips[DickModel - 1];
                     Sprite DickMid = ADVCassets.DickMids[DickModel - 1]; 
@@ -285,9 +316,9 @@ public class LimbAddon : MonoBehaviour //add to a human limb.
                         DickTip = DModelAdvSprites[DModelAdvSprites.Length - 1];
                     }
                     //DModelAdv
-                    if (i == DickLength) {ObjectPassOut = CreatePart("DickTip", DickTip, "Background", new Vector3(0.055f,0), ObjectPassOut, Instance, 999);
+                    if (i == DickLength) {ObjectPassOut = CreatePart("DickTip", DickTip, "Background", new Vector3(0.055f,0), ObjectPassOut, Instance, 999,DickBase,true);
                     }else{
-                        ObjectPassOut = CreatePart("DickMid", DickMid, "Background", new Vector3(0.05f,0), ObjectPassOut, Instance, 999);
+                        ObjectPassOut = CreatePart("DickMid", DickMid, "Background", new Vector3(0.05f,0), ObjectPassOut, Instance, 999,DickBase,true);
                     }//if the tip of a dick, then it's the tip
                     var GenitPartTemp2 = ObjectPassOut.GetComponent<LimbAddonPart>();
                     GenitPartTemp2.CanErect = true;
@@ -297,14 +328,25 @@ public class LimbAddon : MonoBehaviour //add to a human limb.
                     GenitPartTemp2.JiggleAmbpli = 0.5f;
                 }
                 if (IsDildo) this.gameObject.GetComponent<SpriteRenderer>().sprite = ADVCassets.DildoMain[1]; 
+                //Debug.Log("trying to create dick!! DONE");
                 break;
             case "Tits": //tits code
                 ObjectPassOut = CreatePart("TitBody", ADVCassets.TitBases[TitsModel - 1], "Foreground", new Vector3(0,0), Instance, Instance, 999);
+                ObjectPassOut.GetComponent<LimbAddonPart>().JiggleAmbpli = 0.18f * (0.8f + (TitsJiggleAmt * 0.2f));
+                ObjectPassOut.GetComponent<LimbAddonPart>().JiggleRange = 140 * (TitsJiggleAmt * 0.25f); //should be 35 if you multi
+                ObjectPassOut.GetComponent<LimbAddonPart>().JiggleGravity = (TitsJiggleAmt - 1) * 0.5f;
+                ObjectPassOut.GetComponent<LimbAddonPart>().CanGrow = true;
+                ObjectPassOut.GetComponent<LimbAddonPart>().IsTits = true;
                 ObjectPassOut = CreatePart("TitTip", ADVCassets.TitTips[TitsModel - 1], "Foreground", new Vector3(0,0), Instance, Instance, 1);
-                ObjectPassOut.GetComponent<LimbAddonPart>().JiggleAmbpli = 0.18f;
+                ObjectPassOut.GetComponent<LimbAddonPart>().JiggleAmbpli = 0.18f * (0.8f + (TitsJiggleAmt * 0.2f));
+                ObjectPassOut.GetComponent<LimbAddonPart>().JiggleRange = 140 * (TitsJiggleAmt * 0.25f); //should be 35 if you multi
+                ObjectPassOut.GetComponent<LimbAddonPart>().JiggleGravity = (TitsJiggleAmt - 1) * 0.5f;
+                ObjectPassOut.GetComponent<LimbAddonPart>().CanGrow = true;
+                ObjectPassOut.GetComponent<LimbAddonPart>().IsTits = true;
                 break;
             case "Balls": //balls code
                 ObjectPassOut = CreatePart("Balls", ADVCassets.DickBalls[BallsModel - 1], "Background", (new Vector3(0.12f,-0.15f) + DickOffsetVari), Instance, Instance, 999);
+                ObjectPassOut.GetComponent<LimbAddonPart>().CanGrow = true;
                 break;
             case "Blush": //blush code
                 ObjectPassOut = CreatePart("Blush", ADVCassets.Blush[BlushModel - 1], "Foreground", new Vector3(0,0), Instance, Instance, BlushSortOrder);
@@ -379,7 +421,7 @@ public class LimbAddon : MonoBehaviour //add to a human limb.
         }
     }
 
-    public GameObject CreatePart(string Name, Sprite PartSprite, string Layer, Vector3 Objoffset, GameObject PartHost, GameObject PartChainHost, int SortingNum)
+    public GameObject CreatePart(string Name, Sprite PartSprite, string Layer, Vector3 Objoffset, GameObject PartHost, GameObject PartChainHost, int SortingNum, GameObject PartChainSemiHost = null, bool doChainSemi = false)
     { //used to create limb attachments that use the "LimbAddonPart" script, this can be used for more then just Genital, such as ears and cool overlays!
         var NewPart = ModAPI.CreatePhysicalObject(Name, PartSprite);
         // ^ ^ ^ ^ i'm lazy, ignore this- works just as fine honestly- also means less conflictions with ppg updates i gotta patch.
@@ -402,6 +444,10 @@ public class LimbAddon : MonoBehaviour //add to a human limb.
         var GenitPartCom = NewPart.GetComponent<LimbAddonPart>();
         GenitPartCom.PartHost = PartHost;
         GenitPartCom.PartChainHost = PartChainHost;
+        if (!doChainSemi) GenitPartCom.PartChainSemiHost = PartChainHost;
+        else {
+            GenitPartCom.PartChainSemiHost = PartChainSemiHost;
+        }
         GenitPartCom.PartObj = NewPart;
         GenitPartCom.Objoffset = Objoffset;
         GenitPartCom.PartSprite = PartSprite;
@@ -409,6 +455,14 @@ public class LimbAddon : MonoBehaviour //add to a human limb.
     }
 
     public void OrgasmCheck(){
+        if (Config.Furry_Mode){
+            OrgasmPeak = 175; //the cap of Arousal that triggers orgasm, used in certain things only
+            OrgasmMultiplier = 5f; //makes orgasms more powerful, aka drains faster
+        }else{
+            OrgasmPeak = 100; //the cap of Arousal that triggers orgasm, used in certain things only
+            OrgasmMultiplier = 8f; //makes orgasms more powerful, aka drains faster
+        }
+
         if (Arousal > OrgasmPeak) DoingOrgasm = true;
         if (DoingOrgasm){
             if (Arousal > 0){
@@ -438,8 +492,13 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
 {
     public bool CanErect = false; //used internally in the body part init creation, do not change manually- atleast here.
     public GameObject PartChainHost; //the source of all parents in a chain or as-is what it is mainly attached to.
+    public GameObject PartChainSemiHost; //the source of almost all parents, so the base of a dick- for example
     public GameObject PartHost; //what this is Personally parented to - not used much but still important to define.
     public GameObject PartObj; //THIS PART
+    public bool CanGrow = false;
+    public bool IsTits = false; //used to make the grow feature offset it if its tits
+    public bool Growing = false;
+    public Vector2 StartScale; //set auto on start
     public float JiggleRange = 35f; //should define this, otherwise it defaults.
     public float JiggleAmbpli = 0.12f; //should define this, otherwise it defaults.
     public float JiggleGravity = 0f;
@@ -457,6 +516,10 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
     private float velocity_y; //internal velocity used for jiggle mechanics
     private LimbAddon HostGenitals; //used internally, ignore this
     public float RotationalMultiplier = 1f;
+    private float TotalDistance;
+    private float HitDistance;
+    private bool ContainsFuckable;
+    private Vector2 semiScale;
 
     public int ArousalRequired = 0; //set to anything above 0 to limit this to render Only Above a certain Arousal amount.
     private bool RenderCheck = true; //internal variable used to toggle between rendering.
@@ -467,11 +530,13 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
     public int DickPartNum = 0; //used to determine what part of a dick this genital part is- if it is indeed a dick part.
 
     private RaycastHit2D HitSurface; //temp, ignore this
+    private int testCast;
     private ContactFilter2D genitalHitFilter; //ignore this
 
     private Vector4 DickDebugPosStuff;
     private void Awake(){
     }
+
     void Start() {
         genitalHitFilter = new ContactFilter2D();
         genitalHitFilter.layerMask = 1 << LayerMask.NameToLayer("Objects");
@@ -492,6 +557,7 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
                 DefineParticles(ADVCassets.ParticleTextures[0]);
             }
         }
+        StartScale = PartObj.transform.localScale;
     }
 
     void FixedUpdate() {
@@ -561,6 +627,18 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
 
         PartObj.transform.localRotation = Quaternion.Euler(0, 0, (jiggle_rotation * RotationalMultiplier));
 
+        Vector2 PredictEndRescaleRef = PartChainHost.transform.root.transform.localScale; //relative scale in x, for later
+
+        if (CanGrow){
+            PartObj.transform.localScale = (this.StartScale * (HostGenitals.Inflation + 1));
+            if (IsTits) PartObj.transform.localPosition = Objoffset - Vector3.right * ((PredictEndRescaleRef.x) * (HostGenitals.Inflation) * 0.1f); 
+
+            if (HostGenitals.Growing != Growing){
+                Growing = HostGenitals.Growing;
+                if (Growing) DoMoanEvent(11,0);
+            }
+        }
+
         if (PartObj.name == "Pussy"){
             if (HostGenitals.DoingOrgasm) SpawnCumParticles();
         }
@@ -568,13 +646,14 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
         if (PartObj.name == "DickTip"){ //if the tip of a d, then do a check for penetration
             //penetration max-length location math
             float PredictMaxLength = (((0.05f * HostGenitals.DickLength) * (Mathf.Clamp(HostGenitals.ErectionAmp + 1.4f, 0.35f, 1f))) + 0.155f);
-            Vector2 PredictEndRescaleRef = PartChainHost.transform.root.transform.localScale;
+            semiScale = Vector2.one;
+            if (PartChainSemiHost != PartChainHost && PartChainSemiHost != null) semiScale = PartChainSemiHost.transform.localScale;
             float InverseCorrection = 1; //code shortening
             if (PredictEndRescaleRef.x < 0){
             InverseCorrection = -1;
             }
-            float PredictEndX = (PartChainHost.transform.position.x + (((PredictMaxLength * PartChainHost.transform.right.x * PredictEndRescaleRef.x) + ((-(PartChainHost.transform.up.x) * 0.14f)))));
-            float PredictEndY = (PartChainHost.transform.position.y + (((PredictMaxLength * PartChainHost.transform.right.y * PredictEndRescaleRef.x) + ((-(PartChainHost.transform.up.y) * 0.14f)))));
+            float PredictEndX = (PartChainHost.transform.position.x + (((PredictMaxLength * PartChainHost.transform.right.x * semiScale.x * PredictEndRescaleRef.x) + ((-(PartChainHost.transform.up.x) * 0.14f)))));
+            float PredictEndY = (PartChainHost.transform.position.y + (((PredictMaxLength * PartChainHost.transform.right.y * semiScale.x * PredictEndRescaleRef.x) + ((-(PartChainHost.transform.up.y) * 0.14f)))));
 
             if (HostGenitals.DoingOrgasm) SpawnCumParticles();
 
@@ -597,10 +676,14 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
         HitSurface = new RaycastHit2D();
         //HitSurface = Physics2D.Linecast(Base, End, 1 << LayerMask.NameToLayer("Objects")); //idk why but FUCK you ppg, this makes no sense 
         RaycastHit2D[] results = new RaycastHit2D[24];
-        int testCast = Physics2D.Linecast(Base, End, genitalHitFilter, results);
+        testCast = Physics2D.Linecast(Base, End, genitalHitFilter, results);
         if (testCast > 0){
             for (int r = 0; r < results.Length; r++){
                 if (results[r].transform != null){
+                    if (results[r].transform.GetComponent<LimbBehaviour>() == null){
+                        HitSurface = results[r];
+                        break;
+                    }
                     if (results[r].transform.gameObject.name.Contains("LowerBody") || results[r].transform.gameObject.name.Contains("Fuckable")){
                         HitSurface = results[r];
                         hitValid = true;
@@ -609,20 +692,23 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
                 }
             }
         }
-        if (!hitValid){
-            if (HostGenitals.DickIn) DickExitEvent();
-            HostGenitals.DickDeflectFactor = 0f;
-            HostGenitals.DickInsertDist = HostGenitals.DickLength;
-            return;
-        }
-
         if (HitSurface){
+            TotalDistance = Vector2.Distance(Base,End);
+            HitDistance = HitSurface.distance;
+            if (!hitValid){
+                if (HostGenitals.DickIn) DickExitEvent();
+                //HostGenitals.DickDeflectFactor = 0f;
+                //HostGenitals.DickInsertDist = HostGenitals.DickLength;
+                HostGenitals.DickDeflectFactor = (((TotalDistance - HitDistance) / TotalDistance) * 1.5f);
+                HostGenitals.DickInsertDist = HostGenitals.DickLength;
+                if (HostGenitals.DickIn) DickExitEvent();
+                return;
+            }
+
             if (!(HitSurface.transform.root.gameObject == PartChainHost.transform.root.gameObject)){
-                float TotalDistance = Vector2.Distance(Base,End);
-                float HitDistance = HitSurface.distance;
-                bool ContainsFuckable = HitSurface.transform.gameObject.name.Contains("Fuckable");
+                ContainsFuckable = HitSurface.transform.gameObject.name.Contains("Fuckable");
                 //makes them able to fuck anything in the lower body
-                bool ContainsSudoFuckable = true; //HitSurface.transform.gameObject.name.Contains("LowerBody");
+                //bool ContainsSudoFuckable = true; //HitSurface.transform.gameObject.name.Contains("LowerBody");
 
                 int sexVal = 0; //SUPER CURSED CODE, fuck you >:)
                 if (HitSurface.transform.gameObject.name.Contains("_male")) sexVal = 1;
@@ -632,18 +718,13 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
                 if (HitSurface.transform.gameObject.name.Contains("_synthfemale")) sexVal = 6;
                 if (HitSurface.transform.gameObject.name.Contains("_cosmicmale")) sexVal = 7;
                 if (HitSurface.transform.gameObject.name.Contains("_cosmicfemale")) sexVal = 8;
+                if (HitSurface.transform.gameObject.name.Contains("_goblinmale")) sexVal = 9;
+                if (HitSurface.transform.gameObject.name.Contains("_goblinfemale")) sexVal = 10;
 
-                //if (true){ //if the thing is fuckable or not
-                    if (!(HostGenitals.DickIn)) DickEnterEvent(HitSurface.transform.gameObject,sexVal);
+                if (!(HostGenitals.DickIn)) DickEnterEvent(HitSurface.transform.gameObject,sexVal);
 
-                    HostGenitals.DickDeflectFactor = 0f;
-                    HostGenitals.DickInsertDist = (int) Mathf.Round((HitDistance / TotalDistance) * HostGenitals.DickLength);
-                //}
-                // else{
-                //     HostGenitals.DickDeflectFactor = (((TotalDistance - HitDistance) / TotalDistance) * 1.5f);
-                //     HostGenitals.DickInsertDist = HostGenitals.DickLength;
-                //     if (HostGenitals.DickIn) DickExitEvent();
-                // }
+                HostGenitals.DickDeflectFactor = 0f;
+                HostGenitals.DickInsertDist = (int) Mathf.Round((HitDistance / TotalDistance) * HostGenitals.DickLength);
             }else{
                 if (HostGenitals.DickIn) DickExitEvent();
                 HostGenitals.DickDeflectFactor = 0f;
@@ -662,10 +743,18 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
         ModAPI.Notify("Dick Entered Hole");
         if(HostGenitals.DoDickAudio) PlayDickAudio(HostGenitals.DickSfxNormal);
         if (!HostGenitals.IsDildo){
-            HostGenitals.AddArousal(10);
+            if (Config.Furry_Mode){
+                HostGenitals.AddArousal(10);
+            }else{
+                HostGenitals.AddArousal(6);
+            }
             DoMoanEvent(HostGenitals.CustomSexInfo,4);
         }
-        Receiver.SendMessage("AddArousal", 10); //used for communication with maybe other instances of the same code via other mods!?
+        if (Config.Furry_Mode){
+            Receiver.SendMessage("AddArousal", 10); //used for communication with maybe other instances of the same code via other mods!?
+        }else{
+            Receiver.SendMessage("AddArousal", 6); //used for communication with maybe other instances of the same code via other mods!?
+        }
         DoMoanEvent(sexVal,4);
         //Receiver.
         //yo, addon support!??!?!?!?!??!
@@ -679,6 +768,9 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
     //the 2 methods below this comment, define the moan audio and sexes
 
     public void DoMoanEvent(int moanType = 0,int chance = 0){ //plays moan audio and then deletes its audio source, like a play at location one shot but for moan, with a chance
+        if (HostGenitals.GetComponent<LimbBehaviour>() != null) if (HostGenitals.GetComponent<LimbBehaviour>().Health < 0.0001f) return;
+        if (!Config.Moan_Happens && moanType != 3 && moanType != 11) return;
+        
         if (UnityEngine.Random.Range(0,chance) != 0) return;
 
         AudioClip[] audioToPlay;
@@ -710,6 +802,15 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
                 break;
             case 8:
                 audioToPlay = ADVCassets.MoanCosmicFemale;
+                break;
+            case 9:
+                audioToPlay = ADVCassets.MoanGoblinMale;
+                break;
+            case 10:
+                audioToPlay = ADVCassets.MoanGoblinFemale;
+                break;
+            case 11:
+                audioToPlay = ADVCassets.InflationAudio;
                 break;
             default:
                 audioToPlay = ADVCassets.MoanPerson;
@@ -758,6 +859,15 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
             case "cosmicfemale":
                 valOut = 8;
                 break;
+            case "goblinmale":
+                valOut = 9;
+                break;
+            case "goblinfemale":
+                valOut = 10;
+                break;
+            case "inflation":
+                valOut = 11;
+                break;
             default:
                 break;
         }
@@ -779,53 +889,99 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
     }
 
     public void DefineParticles(Texture2D ParticleTexture){
+        if (Config.Furry_Mode) HostGenitals.CumAmt = 60;
+        else HostGenitals.CumAmt = 50;
+
         var ParticleMain = GPObjParticlesElement.main;
-        ParticleMain.duration = 0.3f;
-        ParticleMain.loop = false;
-        ParticleMain.playOnAwake = false;
-        ParticleMain.flipRotation = 50f;
-        ParticleMain.startLifetime = 50f;
-        ParticleMain.startSize = (0.22f);
-        ParticleMain.simulationSpace = ParticleSystemSimulationSpace.World;
-        ParticleMain.scalingMode = ParticleSystemScalingMode.Shape;
-        ParticleMain.gravityModifier = 0.6f;
-        ParticleMain.startSpeedMultiplier = 0.3f;
-
-        ParticleMain.startColor = HostGenitals.CumColour; 
-        
         var VelocityLimitOT = GPObjParticlesElement.limitVelocityOverLifetime;
-        VelocityLimitOT.dragMultiplier = 0.1f;
-        VelocityLimitOT.multiplyDragByParticleVelocity = true;
-
         var ParticleShape = GPObjParticlesElement.shape;
-        ParticleShape.enabled = true;
-        ParticleShape.spriteRenderer = PartObj.GetComponent<SpriteRenderer>();
-
         var ParticleEmission = GPObjParticlesElement.emission;
-        ParticleEmission.enabled = true;
-        ParticleEmission.rateOverTime = HostGenitals.CumAmt;
-        ParticleEmission.rateOverDistance = 7;
-
         var ParticleROLT = GPObjParticlesElement.rotationOverLifetime;
-        ParticleROLT.enabled = true;
-        ParticleROLT.z = UnityEngine.Random.Range(-3f, 3f);
-
         var ParticleSize = GPObjParticlesElement.sizeOverLifetime;
-        ParticleSize.enabled = false;
-        ParticleSize.size = new ParticleSystem.MinMaxCurve(0.22f, 0.22f);
-        
         var ParticleCol = GPObjParticlesElement.collision;
-        ParticleCol.mode = ParticleSystemCollisionMode.Collision2D;
-        ParticleCol.type = ParticleSystemCollisionType.World;
-        ParticleCol.enabled = true;
-        ParticleCol.bounce = 0.55f;
-
         var ParticleTrails = GPObjParticlesElement.trails;
-        ParticleTrails.enabled = true;
-        ParticleTrails.ratio = 1f;
-        ParticleTrails.inheritParticleColor = true;
-        ParticleTrails.lifetime = 0.01f;
-        ParticleTrails.widthOverTrail = 0.21f;
+
+        if (Config.Furry_Mode){ //THE NEW INSANE CUM CODE
+            ParticleMain.duration = 0.3f;
+            ParticleMain.loop = false;
+            ParticleMain.playOnAwake = false;
+            ParticleMain.flipRotation = 50f;
+            ParticleMain.startLifetime = 50f;
+            ParticleMain.startSize = (0.22f);
+            ParticleMain.simulationSpace = ParticleSystemSimulationSpace.World;
+            ParticleMain.scalingMode = ParticleSystemScalingMode.Shape;
+            ParticleMain.gravityModifier = 0.6f;
+            ParticleMain.startSpeedMultiplier = 0.3f;
+
+            ParticleMain.startColor = HostGenitals.CumColour; 
+            
+            VelocityLimitOT.dragMultiplier = 0.1f;
+            VelocityLimitOT.multiplyDragByParticleVelocity = true;
+
+            ParticleShape.enabled = true;
+            ParticleShape.spriteRenderer = PartObj.GetComponent<SpriteRenderer>();
+
+            ParticleEmission.enabled = true;
+            ParticleEmission.rateOverTime = HostGenitals.CumAmt;
+            ParticleEmission.rateOverDistance = 7;
+
+            ParticleROLT.enabled = true;
+            ParticleROLT.z = UnityEngine.Random.Range(-3f, 3f);
+
+            ParticleSize.enabled = false;
+            ParticleSize.size = new ParticleSystem.MinMaxCurve(0.22f, 0.22f);
+            
+            ParticleCol.mode = ParticleSystemCollisionMode.Collision2D;
+            ParticleCol.type = ParticleSystemCollisionType.World;
+            ParticleCol.enabled = true;
+            ParticleCol.bounce = 0.55f;
+
+            ParticleTrails.enabled = true;
+            ParticleTrails.ratio = 1f;
+            ParticleTrails.inheritParticleColor = true;
+            ParticleTrails.lifetime = 0.01f;
+            ParticleTrails.widthOverTrail = 0.21f;
+        }else{ //THE ORIGINAL CUM CODE
+            ParticleMain.duration = 0.11f;
+            ParticleMain.loop = false;
+            ParticleMain.playOnAwake = false;
+            ParticleMain.flipRotation = 50f;
+            ParticleMain.startLifetime = 10f;
+            ParticleMain.startSize = (0.2f);
+            ParticleMain.simulationSpace = ParticleSystemSimulationSpace.World;
+            ParticleMain.scalingMode = ParticleSystemScalingMode.Shape;
+            ParticleMain.gravityModifier = 0.75f;
+            ParticleMain.startSpeedMultiplier = 0.2f;
+
+            ParticleMain.startColor = HostGenitals.CumColour; 
+            
+            VelocityLimitOT.dragMultiplier = 0.1f;
+            VelocityLimitOT.multiplyDragByParticleVelocity = true;
+
+            ParticleShape.enabled = true;
+            ParticleShape.spriteRenderer = PartObj.GetComponent<SpriteRenderer>();
+
+            ParticleEmission.enabled = true;
+            ParticleEmission.rateOverTime = HostGenitals.CumAmt;
+            ParticleEmission.rateOverDistance = 5;
+
+            ParticleROLT.enabled = true;
+            ParticleROLT.z = UnityEngine.Random.Range(-3f, 3f);
+
+            ParticleSize.enabled = false;
+            ParticleSize.size = new ParticleSystem.MinMaxCurve(0.22f, 0.22f);
+            
+            ParticleCol.mode = ParticleSystemCollisionMode.Collision2D;
+            ParticleCol.type = ParticleSystemCollisionType.World;
+            ParticleCol.enabled = true;
+            ParticleCol.bounce = 0.45f;
+
+            ParticleTrails.enabled = true;
+            ParticleTrails.ratio = 1f;
+            ParticleTrails.inheritParticleColor = true;
+            ParticleTrails.lifetime = 0.02f;
+            ParticleTrails.widthOverTrail = 0.2f;
+        }
 
         var ParticleRenderer = GPObjParticlesElement.GetComponent<ParticleSystemRenderer>();
         ParticleRenderer.trailMaterial = ModAPI.FindMaterial("Sprites-Default");
@@ -839,7 +995,9 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
         if (HostGenitals.LastCumTickTime < UnityEngine.Time.fixedTime){
             HostGenitals.LastCumTickTime = UnityEngine.Time.fixedTime + 0.23f;
             GPObjParticlesElement.Play();
-            DoMoanEvent(3,2);
+
+            if (Config.Cum_Audio) DoMoanEvent(3,2);
+
             if (HostGenitals.IsCosmic){
                 HostGenitals.gameObject.GetComponent<CosmicLimbImmortality>().CreateCosmicParticle();
             }

@@ -1,10 +1,18 @@
-PPG Sex Mod 2.0 Update :
+PPG Sex Mod 2.2 Update :
 
-- Penetration can now pass around objects directly infront of the fuckable object, such as the hands. (dicks will no longer be blocked by limbs)
-- Can now fuck any humanoid, even ones not from the sex mod (they just won't have the same support and abilities).
-- Changed orgasm systems / more cum.
-- Faster more reasonable arousal gain rates.
-- Added Humping pose override option in certain context menus.
-- Added Cum audio.
-- Added sex and species related Moan Sounds.
-- Added a new species- Cosmic entities. with immortality and cool visual effects.
+- Added Clothing, my own clothing system that generates textures in real time,
+has a slots system, and seamlessly works with any other mod, without needing to parent a child object. works with gore.
+- Added Goblins (male and female) including their respective NSFW mode items
+- Bug fix relating to Penetration checks, for object too.
+- Added more options to the ~ CONFIG ~.cs file, including a "Inflation" feature in the config that you can toggle if in NSFW Mode.
+- Made the cosmic rendering even more advanced, including trail effects that change according to physics- to flow better.
+- Reworked a lot of the LimbAddon for optimisation.
+- Other quality of life fixes...
+- Made a Github https://github.com/Aubarino/PPGADVCharacterMod for the mod.
+- Added Config file options for if in NSFW Mode; for Moan sounds, Cum sounds, and "Furry Mode"
+- Revised a lot of the censoring code for SFW Mode so its more stable now.
+- Reworked titty jiggle to be dependent on titty mass / the size of the rack.
+- Reworked the shaft penetration code tip prediction to be relative to the LimbAddon's scale while relative to the main object, including tits too.
+- Made Clothing registering entirely automatic simply from what i define in ADVCassets.cs.
+- Cosmic Entities now float a little / slow down their physics supernaturally.
+- Other unlisted changes i forgot to note down.

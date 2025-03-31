@@ -50,8 +50,8 @@ namespace Mod
             //Debug.Log("sex mod loaded");
             AAS.Boot();
             if(AAS.BootCore){
-                classicCB.Create("ACM", Config.NSFW_MODE ? "THE SEX MOD" : "Advanced Character Mod", ModAPI.LoadSprite(Config.NSFW_MODE ? "caticon.png" : "caticon_normal.png", 4));
                 Config.Config_Setup(); //sets up the config!
+                classicCB.Create("ACM", Config.NSFW_MODE ? "THE SEX MOD" : "Advanced Character Mod", ModAPI.LoadSprite(Config.NSFW_MODE ? "caticon.png" : "caticon_normal.png", 4));
                 ADVCassets.Init(); //loads up all the assets!
                 RegisterHumans(); //human objects
                 RegisterObjs(); //non-human objects
@@ -94,11 +94,9 @@ namespace Mod
                     RegistDildo(4,"Fish Dildo","A anthropomorphic fish dildo",7,true,ADVCassets.DickADV_Fish,3);
                     RegistDildo(5,"Biosynthetic Penis","A biosynthetic penis",4,true,ADVCassets.DickADV_Proto,4);
                     RegistDildo(6,"Snake Dildo","A anthropomorphic snake dildo",6,true,ADVCassets.DickADV_Snake,5);
+                    RegistDildo(7,"Goblin Dildo","A dildo based on a goblin",5,false,null,6,3);
                 }
-                RegistClothing(0,"A Choker fashion accessory for the neck");
-                RegistClothing(1,"A Leather Collar with a little bell");
-                RegistClothing(2,"Shades for looking cool");
-                RegistClothing(3,"Nya nya nya! paw gloves");
+                RegistAllClothing();
             }
         }
 
@@ -1153,6 +1151,135 @@ namespace Mod
                         }
                     }
             );
+        //goblin male
+            ModAPI.Register(
+                new Modification(){
+                    OriginalItem = ModAPI.FindSpawnable("Human"),
+                    NameOverride = "Male Goblin",
+                    NameToOrderByOverride = "!!!!!goblin_male",
+                    DescriptionOverride = "Male Goblinoid Character, classic high-fantasy goblin",
+                    CategoryOverride = ModAPI.FindCategory("ACM"),
+                    ThumbnailOverride = ModAPI.LoadSprite("assets/icons/goblin_male.png"),
+                    AfterSpawn = (Instance) =>
+                    {
+                        var GenderHuman = Instance.GetComponent<PersonBehaviour>();
+                        GenderHuman.SetBruiseColor(82, 84, 14);
+                        GenderHuman.SetSecondBruiseColor(126, 133, 29);
+                        GenderHuman.SetThirdBruiseColor(148, 181, 65);
+                        GenderHuman.SetBloodColour(198, 23, 23);
+                        GenderHuman.SetRottenColour(68, 105, 87);
+                        Instance.transform.localScale *= 0.75f;
+
+                        foreach (var limb in GenderHuman.Limbs){
+                            limb.SpeciesIdentity = "Goblin";
+                            switch(limb.gameObject.name){
+                            case "LowerBody":
+                                var Crotch = limb.gameObject.AddComponent<LimbAddon>();
+                                Crotch.HasAss = true;
+                                MakeFuckable(limb.gameObject,"goblinmale");
+                                Crotch.IsOrgasmSource = true;
+                                Crotch.OrgasmSourceFuckable = true;
+
+                                Crotch.Instance = limb.gameObject;
+                                Crotch.Dick = true;
+                                Crotch.DickModel = 3;
+                                Crotch.DickLength = 5;
+                                Crotch.DoDickAudio = true;
+
+                                Crotch.Balls = true;
+                                Crotch.BallsModel = 6;
+
+                                Crotch.CumColour = new Color32(205, 227, 172, 110);
+                                break;
+                            case "Head":
+                                var Head = limb.gameObject.AddComponent<LimbAddon>();
+                                Head.Instance = limb.gameObject;
+                                Head.CanBlush = true;
+                                Head.BlushModel = 9;
+
+                                Head.Overlay = true;
+                                Head.OverlayModel = 18;
+                                Head.OverlaySortNum = 1;
+
+                                Head.LargeEar = true;
+                                Head.LargeEarModel = 2;
+                                break;
+                            default:
+                                break;
+                            }
+                        }
+                        SetArousalNets(GetArousalNets(GenderHuman));
+                        GenderHuman.SetBodyTextures(ADVCassets.GoblinSkinMale, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                    }
+                }
+            );
+        //goblin female
+            ModAPI.Register(
+                new Modification(){
+                    OriginalItem = ModAPI.FindSpawnable("Human"),
+                    NameOverride = "Female Goblin",
+                    NameToOrderByOverride = "!!!!!goblin_female",
+                    DescriptionOverride = "Female Shortstack Goblin Character, classic high-fantasy female goblin",
+                    CategoryOverride = ModAPI.FindCategory("ACM"),
+                    ThumbnailOverride = ModAPI.LoadSprite("assets/icons/goblin_female.png"),
+                    AfterSpawn = (Instance) =>
+                    {
+                        var GenderHuman = Instance.GetComponent<PersonBehaviour>();
+                        GenderHuman.SetBruiseColor(82, 84, 14);
+                        GenderHuman.SetSecondBruiseColor(126, 133, 29);
+                        GenderHuman.SetThirdBruiseColor(148, 181, 65);
+                        GenderHuman.SetBloodColour(198, 23, 23);
+                        GenderHuman.SetRottenColour(68, 105, 87);
+                        Instance.transform.localScale *= 0.75f;
+
+                        foreach (var limb in GenderHuman.Limbs)
+                        {
+                            limb.SpeciesIdentity = "Goblin";
+                            switch(limb.gameObject.name) 
+                            {
+                            case "UpperBody":
+                                var Chest = limb.gameObject.AddComponent<LimbAddon>();
+                                Chest.Instance = limb.gameObject;
+                                
+                                Chest.Tits = true;
+                                Chest.TitsJiggleAmt = 2.5f;
+                                if (Config.NSFW_MODE) Chest.TitsModel = 5;
+                                else Chest.TitsModel = 4;
+                                break;
+                            case "LowerBody":
+                                var Crotch = limb.gameObject.AddComponent<LimbAddon>();
+                                Crotch.HasAss = true;
+                                Crotch.HasPussy = true;
+                                MakeFuckable(limb.gameObject,"goblinfemale");
+                                Crotch.IsOrgasmSource = true;
+                                Crotch.OrgasmSourceFuckable = true;
+                                Crotch.Instance = limb.gameObject;
+
+                                Crotch.CumColour = new Color32(205, 227, 172, 110);
+                                break;
+                            case "Head":
+                                var Head = limb.gameObject.AddComponent<LimbAddon>();
+                                Head.Instance = limb.gameObject;
+                                Head.CanBlush = true;
+                                Head.BlushModel = 10;
+                                Head.MoanSource = true; //experimental
+
+                                Head.Overlay = true;
+                                Head.OverlayModel = 17;
+                                Head.OverlaySortNum = 1;
+
+                                Head.LargeEar = true;
+                                Head.LargeEarModel = 2;
+                                break;
+                            default:
+                                break;
+                            }
+                        }
+                        SetArousalNets(GetArousalNets(GenderHuman));
+                        GenderHuman.SetBodyTextures(ADVCassets.GoblinSkinFemale, ADVCassets.FemaleFlesh, ADVCassets.FemaleBone);
+                    }
+                }
+            );
         }
 
         public static void SetLimbPhys(GameObject PhysGO, string Mat) //shortcut method used to easily set Phys Properties of a limb 'n such.
@@ -1190,13 +1317,20 @@ namespace Mod
             }
         }
 
-        public static void RegistClothing(int ClothingID,string Description){
+        public static void RegistAllClothing(){
+            for(int i = 0; i < ADVCassets.ClothingNameIds.Length; i++){
+                if (ADVCassets.ClothingNsfwStatus[i] && !Config.NSFW_MODE) continue; //cannot register if in sfw mode and it is a nsfw clothing item, skips it to next.
+                RegistClothing(i);
+            }
+        }
+
+        public static void RegistClothing(int ClothingID){
             ModAPI.Register(
                 new Modification(){
                     OriginalItem = ModAPI.FindSpawnable("Brick"),
                     NameOverride = ADVCassets.ClothingNameIds[ClothingID],
                     NameToOrderByOverride = "!!!!!objs_clothing_" + ClothingID,
-                    DescriptionOverride = Description,
+                    DescriptionOverride = ADVCassets.ClothingDescs[ClothingID],
                     CategoryOverride = ModAPI.FindCategory("ACM"),
                     ThumbnailOverride = ADVCassets.ClothingIconTextures[ClothingID],
                     AfterSpawn = (Instance) =>
@@ -1221,7 +1355,7 @@ namespace Mod
             );
         }
 
-        public static void RegistDildo(int DildoID, string Name, string Description, int Length = 7, bool ADVOverride = false, Sprite[] DickADV = null, int ballsID = 5){
+        public static void RegistDildo(int DildoID, string Name, string Description, int Length = 7, bool ADVOverride = false, Sprite[] DickADV = null, int ballsID = 5, int dickModelOverride = -1){
             ModAPI.Register(
                 new Modification(){
                     OriginalItem = ModAPI.FindSpawnable("Brick"),
@@ -1252,10 +1386,12 @@ namespace Mod
                             Dildo.Balls = true;
                             Dildo.BallsModel = ballsID;
                         }else{//normal non-adv dick
-                            Dildo.DickModel = DildoID;
+                            if (dickModelOverride != -1) Dildo.DickModel = dickModelOverride;
+                            else Dildo.DickModel = DildoID;
                             Dildo.DickLength = Length;
                             Dildo.Balls = true;
                             Dildo.BallsModel = DildoID;
+                            if (ballsID != 5) Dildo.BallsModel = ballsID;
                         }
                     }
                 }
