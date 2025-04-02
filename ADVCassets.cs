@@ -36,7 +36,7 @@ public struct ADVCassets
     public static string[] ClothingDescs;
     public static bool[] ClothingNsfwStatus;
 
-    Dictionary<string, Texture2D> Skins = new Dictionary<string, Texture2D>();
+    public static Dictionary<string, Texture2D> Skins = new Dictionary<string, Texture2D>();
 
     // public static Texture2D FemaleSkin;
     // public static Texture2D FemaleFlesh;
@@ -98,6 +98,7 @@ public struct ADVCassets
     public static Sprite[] DickADV_Fish;
     public static Sprite[] DickADV_Proto;
     public static Sprite[] DickADV_Snake;
+    public static Sprite[] DickADV_Fox;
 
     //Overlays
     public static Sprite[] Overlays;
@@ -114,7 +115,8 @@ public struct ADVCassets
         DickADV_Fish = CollectDickADV(2, 8);
         DickADV_Proto = CollectDickADV(3, 5);
         DickADV_Snake = CollectDickADV(4, 7);
-        Overlays = GenOverlays(18); //sets up overlays from "assets\overlays", increasing in number up to the max here.
+        DickADV_Fox = CollectDickADV(5, 6);
+        Overlays = GenOverlays(19); //sets up overlays from "assets\overlays", increasing in number up to the max here.
         ParticleTextures = GenParticleTextures(5);
 
         ClothingIconTextures = new Sprite[]{};
@@ -207,7 +209,14 @@ public struct ADVCassets
             {"CosmicBone", ModAPI.LoadTexture("assets/bone_cosmic.png")},
             //goblins
             {"GoblinSkinFemale", ModAPI.LoadTexture("assets/default_skin_goblin_female.png")},
-            {"GoblinSkinMale", ModAPI.LoadTexture("assets/default_skin_goblin_male.png")}
+            {"GoblinSkinMale", ModAPI.LoadTexture("assets/default_skin_goblin_male.png")},
+            //fox
+            {"FemaleFoxSkin", ModAPI.LoadTexture("assets/default_skin_fox_female.png")},
+            {"MaleFoxSkin", ModAPI.LoadTexture("assets/default_skin_fox_male.png")},
+            {"FoxFleshFemale", ModAPI.LoadTexture("assets/default_flesh_fox_female.png")},
+            {"FoxFleshMale", ModAPI.LoadTexture("assets/default_flesh_fox_male.png")},
+            {"FoxBoneFemale", ModAPI.LoadTexture("assets/default_bone_fox_female.png")},
+            {"FoxBoneMale", ModAPI.LoadTexture("assets/default_bone_fox_male.png")}
         };
         //FemaleSkin = ModAPI.LoadTexture("assets/default_skin_female.png");
         //FemaleFlesh = ModAPI.LoadTexture("assets/default_flesh_female.png");
@@ -246,7 +255,8 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/objs/dildo_icon4.png"),
             ModAPI.LoadSprite("assets/objs/dildo_icon5.png"),
             ModAPI.LoadSprite("assets/objs/dildo_icon6.png"),
-            ModAPI.LoadSprite("assets/objs/dildo_icon7.png")
+            ModAPI.LoadSprite("assets/objs/dildo_icon7.png"),
+            ModAPI.LoadSprite("assets/objs/dildo_icon8.png")
         };
         DildoMain = new[]{
             ModAPI.LoadSprite("assets/objs/dildobase.png"),
@@ -258,14 +268,16 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/tit_2_body.png"),
             ModAPI.LoadSprite("assets/tit_3_body.png"),
             ModAPI.LoadSprite("assets/tit_4_body.png"),
-            ModAPI.LoadSprite("assets/tit_5_body.png")
+            ModAPI.LoadSprite("assets/tit_5_body.png"),
+            ModAPI.LoadSprite("assets/tit_6_body.png")
         };
         TitTips = new[]{
             ModAPI.LoadSprite("assets/tit_1_tip.png"),
             ModAPI.LoadSprite("assets/tit_2_tip.png"),
             ModAPI.LoadSprite("assets/tit_3_tip.png"),
             ModAPI.LoadSprite("assets/tit_4_tip.png"),
-            ModAPI.LoadSprite("assets/tit_5_tip.png")
+            ModAPI.LoadSprite("assets/tit_5_tip.png"),
+            ModAPI.LoadSprite("assets/tit_6_tip.png")
         };
 
         DickBases = new[]{
@@ -289,7 +301,8 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/fish_balls.png"),
             ModAPI.LoadSprite("assets/proto_balls.png"),
             ModAPI.LoadSprite("assets/snake_balls.png"),
-            ModAPI.LoadSprite("assets/dick_3_balls.png")
+            ModAPI.LoadSprite("assets/dick_3_balls.png"),
+            ModAPI.LoadSprite("assets/fox_balls.png")
         };
 
         Blush = new[]{
@@ -302,17 +315,20 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/blush_7.png"),
             ModAPI.LoadSprite("assets/blush_8.png"),
             ModAPI.LoadSprite("assets/blush_9.png"),
-            ModAPI.LoadSprite("assets/blush_10.png")
+            ModAPI.LoadSprite("assets/blush_10.png"),
+            ModAPI.LoadSprite("assets/blush_11.png")
         };
         LoveEyes = new[]{
             ModAPI.LoadSprite("assets/loveeyes_1.png")
         };
 
         EarLeft = new[]{
-            ModAPI.LoadSprite("assets/ear_1_left.png")
+            ModAPI.LoadSprite("assets/ear_1_left.png"),
+            ModAPI.LoadSprite("assets/ear_2_left.png")
         };
         EarRight = new[]{
-            ModAPI.LoadSprite("assets/ear_1_right.png")
+            ModAPI.LoadSprite("assets/ear_1_right.png"),
+            ModAPI.LoadSprite("assets/ear_2_right.png")
         };
         EarLarge = new[]{
             ModAPI.LoadSprite("assets/ear_large_1.png"),
@@ -324,21 +340,24 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/tails/tail_2_start.png"),
             ModAPI.LoadSprite("assets/tails/tail_3_start.png"),
             ModAPI.LoadSprite("assets/tails/tail_4_start.png"),
-            ModAPI.LoadSprite("assets/tails/tail_5_start.png")
+            ModAPI.LoadSprite("assets/tails/tail_5_start.png"),
+            ModAPI.LoadSprite("assets/tails/tail_6_start.png")
         };
         TailMid = new[]{
             ModAPI.LoadSprite("assets/tails/tail_1_mid.png"),
             ModAPI.LoadSprite("assets/tails/tail_2_mid.png"),
             ModAPI.LoadSprite("assets/tails/tail_3_mid.png"),
             ModAPI.LoadSprite("assets/tails/tail_4_mid.png"),
-            ModAPI.LoadSprite("assets/tails/tail_5_mid.png")
+            ModAPI.LoadSprite("assets/tails/tail_5_mid.png"),
+            ModAPI.LoadSprite("assets/tails/tail_6_mid.png")
         };
         TailTip = new[]{
             ModAPI.LoadSprite("assets/tails/tail_1_tip.png"),
             ModAPI.LoadSprite("assets/tails/tail_2_tip.png"),
             ModAPI.LoadSprite("assets/tails/tail_3_tip.png"),
             ModAPI.LoadSprite("assets/tails/tail_4_tip.png"),
-            ModAPI.LoadSprite("assets/tails/tail_5_tip.png")
+            ModAPI.LoadSprite("assets/tails/tail_5_tip.png"),
+            ModAPI.LoadSprite("assets/tails/tail_6_tip.png")
         };
         //damage stuff, idk
         TailDmg = new[]{
@@ -346,7 +365,8 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/tails/tail_2_destroyed.png"),
             ModAPI.LoadSprite("assets/tails/tail_3_destroyed.png"),
             ModAPI.LoadSprite("assets/tails/tail_4_destroyed.png"),
-            ModAPI.LoadSprite("assets/tails/tail_5_destroyed.png")
+            ModAPI.LoadSprite("assets/tails/tail_5_destroyed.png"),
+            ModAPI.LoadSprite("assets/tails/tail_6_destroyed.png")
         };
         //OTHER damage sprites...
         ChadDmgHairOverlay = ModAPI.LoadSprite("assets/overlays/5_dmg.png");

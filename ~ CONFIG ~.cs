@@ -17,7 +17,7 @@ public struct Config
         // and take SOLE Responsibility for using the mod in NSFW MODE!!!
         // Otherwise, Set this to false! It will default to false!
 
-        bool I_AGREE_TO_THE_ABOVE_STATEMENT = false; //---- set this to true if you want NSFW Mode, remember to leave the end line character aka ";" at the end, so "true;"
+        bool I_AGREE_TO_THE_ABOVE_STATEMENT = true; //---- set this to true if you want NSFW Mode, remember to leave the end line character aka ";" at the end, so "true;"
 
         //NOTE - READ MEEEEEEEEEEEEEEEEEE!!!!!!!!!!!!!! === toggle erections with activate (F Key) on crotch!
         NSFW_MODE = I_AGREE_TO_THE_ABOVE_STATEMENT;
@@ -36,7 +36,7 @@ public struct Config
         
         Furry_Mode = false; //set to true if you want "Furry Mode", aka Cum is insanely overkill and orgasms last longer
 
-        Inflation = false; //if set to true, adds a context menu option to some parts for "inflation".
+        Inflation = true; //if set to true, adds a context menu option to some parts for "inflation".
         // why did i add this? idk, someone will probably like this feature, knowing you weirdos...
     }
 }

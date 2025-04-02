@@ -95,6 +95,7 @@ namespace Mod
                     RegistDildo(5,"Biosynthetic Penis","A biosynthetic penis",4,true,ADVCassets.DickADV_Proto,4);
                     RegistDildo(6,"Snake Dildo","A anthropomorphic snake dildo",6,true,ADVCassets.DickADV_Snake,5);
                     RegistDildo(7,"Goblin Dildo","A dildo based on a goblin",5,false,null,6,3);
+                    RegistDildo(8,"Vulpine Dildo","A vulpine dildo with a knot",5,true,ADVCassets.DickADV_Fox,7);
                 }
                 RegistAllClothing();
             }
@@ -1277,6 +1278,123 @@ namespace Mod
                         }
                         SetArousalNets(GetArousalNets(GenderHuman));
                         GenderHuman.SetBodyTextures(ADVCassets.Skins["GoblinSkinFemale"], ADVCassets.Skins["FemaleFlesh"], ADVCassets.Skins["FemaleBone"]);
+                    }
+                }
+            );
+        //anthro vulpine male
+            ModAPI.Register(
+                new Modification(){
+                    OriginalItem = ModAPI.FindSpawnable("Human"),
+                    NameOverride = "Male Anthro Fox",
+                    NameToOrderByOverride = "!!!!!anthro_vulpine_male_s1",
+                    DescriptionOverride = "Anthropomorphic Male Vulpine Character",
+                    CategoryOverride = ModAPI.FindCategory("ACM"),
+                    ThumbnailOverride = ModAPI.LoadSprite("assets/icons/fox_male.png"),
+                    AfterSpawn = (Instance) =>
+                    {
+                        var GenderHuman = Instance.GetComponent<PersonBehaviour>();
+                        foreach (var limb in GenderHuman.Limbs){
+                            limb.SpeciesIdentity = "Vulpine";
+                            switch(limb.gameObject.name){
+                            case "LowerBody":
+                                var Crotch = limb.gameObject.AddComponent<LimbAddon>();
+                                Crotch.HasAss = true;
+                                MakeFuckable(limb.gameObject,"male");
+                                Crotch.IsOrgasmSource = true;
+                                Crotch.OrgasmSourceFuckable = true;
+
+                                Crotch.Instance = limb.gameObject;
+                                Crotch.Dick = true;
+                                Crotch.DickModel = 1;
+                                Crotch.DModelAdv = true;
+                                Crotch.DModelAdvSprites = ADVCassets.DickADV_Fox;
+                                Crotch.DickLength = 5; //1 less then the total dick length of the adv dick, as we're ignoring the Dick Base part of it.
+                                Crotch.DoDickAudio = true;
+
+                                Crotch.Tail = true;
+                                Crotch.TailModel = 6;
+                                Crotch.DmgVari_Tail = ADVCassets.TailDmg[5];
+
+                                Crotch.Balls = true;
+                                Crotch.BallsModel = 7;
+                                break;
+                            case "Head":
+                                var Head = limb.gameObject.AddComponent<LimbAddon>();
+                                Head.Instance = limb.gameObject;
+                                Head.CanBlush = true;
+                                Head.BlushModel = 11;
+
+                                Head.Ears = true;
+                                Head.EarModel = 2;
+
+                                Head.Overlay = true;
+                                Head.OverlayModel = 19;
+                                Head.OverlaySortNum = 1;
+                                break;
+                            default:
+                                break;
+                            }
+                        }
+                        SetArousalNets(GetArousalNets(GenderHuman));
+                        GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleFoxSkin"], ADVCassets.Skins["FoxFleshMale"], ADVCassets.Skins["FoxBoneMale"]);
+                    }
+                }
+            );
+            //anthro vulpine female
+            ModAPI.Register(
+                new Modification(){
+                    OriginalItem = ModAPI.FindSpawnable("Human"),
+                    NameOverride = "Female Anthro Fox",
+                    NameToOrderByOverride = "!!!!!anthro_vulpine_female_s1",
+                    DescriptionOverride = "Anthropomorphic Female Vulpine Character",
+                    CategoryOverride = ModAPI.FindCategory("ACM"),
+                    ThumbnailOverride = ModAPI.LoadSprite("assets/icons/fox_female.png"),
+                    AfterSpawn = (Instance) =>
+                    {
+                        var GenderHuman = Instance.GetComponent<PersonBehaviour>();
+                        foreach (var limb in GenderHuman.Limbs){
+                            limb.SpeciesIdentity = "Vulpine";
+                            switch(limb.gameObject.name){
+                            case "UpperBody":
+                                var Chest = limb.gameObject.AddComponent<LimbAddon>();
+                                Chest.Instance = limb.gameObject;
+                                Chest.Tits = true;
+                                Chest.TitsModel = 6;
+                                break;
+                            case "LowerBody":
+                                var Crotch = limb.gameObject.AddComponent<LimbAddon>();
+                                Crotch.Instance = limb.gameObject;
+                                Crotch.HasPussy = true;
+                                Crotch.HasAss = true;
+
+                                Crotch.Tail = true;
+                                Crotch.TailModel = 6;
+                                Crotch.DmgVari_Tail = ADVCassets.TailDmg[5];
+
+                                MakeFuckable(limb.gameObject,"female");
+                                Crotch.IsOrgasmSource = true;
+                                Crotch.OrgasmSourceFuckable = true;
+                                break;
+                            case "Head":
+                                var Head = limb.gameObject.AddComponent<LimbAddon>();
+                                Head.Instance = limb.gameObject;
+                                Head.CanBlush = true;
+                                Head.BlushModel = 11;
+                                Head.MoanSource = true; //experimental
+
+                                Head.Ears = true;
+                                Head.EarModel = 2;
+
+                                Head.Overlay = true;
+                                Head.OverlayModel = 19;
+                                Head.OverlaySortNum = 1;
+                                break;
+                            default:
+                                break;
+                            }
+                        }
+                        SetArousalNets(GetArousalNets(GenderHuman));
+                        GenderHuman.SetBodyTextures(ADVCassets.Skins["FemaleFoxSkin"], ADVCassets.Skins["FoxFleshFemale"], ADVCassets.Skins["FoxBoneFemale"]);
                     }
                 }
             );
