@@ -36,40 +36,35 @@ public struct ADVCassets
     public static string[] ClothingDescs;
     public static bool[] ClothingNsfwStatus;
 
-    public static Texture2D FemaleSkin;
-    public static Texture2D FemaleFlesh;
-    public static Texture2D FemaleBone;
-    public static Texture2D CoolGuySkin;
-    public static Texture2D MaleSkin;
-    public static Texture2D MaleFlesh;
-    public static Texture2D MaleBone;
+    Dictionary<string, Texture2D> Skins = new Dictionary<string, Texture2D>();
 
-    public static Texture2D FemaleFurrySkin;
-    public static Texture2D MaleFurrySkin;
-
-    public static Texture2D FishSkinFemale;
-    public static Texture2D FishSkinMale;
-    public static Texture2D FishFlesh;
-    public static Texture2D FishBone;
-
-    public static Texture2D ProtoSkinMale;
-    public static Texture2D ProtoSkinFemale;
-    public static Texture2D ProtoFlesh;
-    public static Texture2D ProtoBone;
-
-    public static Texture2D ChadSkin;
-
-    public static Texture2D SnakeBones;
-    public static Texture2D SnakeSkinMale;
-    public static Texture2D SnakeSkinFemale;
-    public static Texture2D SnakeFlesh;
-
-    public static Texture2D CosmicFleshMale;
-    public static Texture2D CosmicFleshFemale;
-    public static Texture2D CosmicBone;
-
-    public static Texture2D GoblinSkinFemale;
-    public static Texture2D GoblinSkinMale;
+    // public static Texture2D FemaleSkin;
+    // public static Texture2D FemaleFlesh;
+    // public static Texture2D FemaleBone;
+    // public static Texture2D CoolGuySkin;
+    // public static Texture2D MaleSkin;
+    // public static Texture2D MaleFlesh;
+    // public static Texture2D MaleBone;
+    // public static Texture2D FemaleFurrySkin;
+    // public static Texture2D MaleFurrySkin;
+    // public static Texture2D FishSkinFemale;
+    // public static Texture2D FishSkinMale;
+    // public static Texture2D FishFlesh;
+    // public static Texture2D FishBone;
+    // public static Texture2D ProtoSkinMale;
+    // public static Texture2D ProtoSkinFemale;
+    // public static Texture2D ProtoFlesh;
+    // public static Texture2D ProtoBone;
+    // public static Texture2D ChadSkin;
+    // public static Texture2D SnakeBones;
+    // public static Texture2D SnakeSkinMale;
+    // public static Texture2D SnakeSkinFemale;
+    // public static Texture2D SnakeFlesh;
+    // public static Texture2D CosmicFleshMale;
+    // public static Texture2D CosmicFleshFemale;
+    // public static Texture2D CosmicBone;
+    // public static Texture2D GoblinSkinFemale;
+    // public static Texture2D GoblinSkinMale;
 
     public static Sprite DevNullSprite;
 
@@ -174,40 +169,73 @@ public struct ADVCassets
         MoanGoblinMale = CollectAudioArray("moan_male_goblin",5);
         MoanGoblinFemale = CollectAudioArray("moan_female_goblin",5);
 
-        FemaleSkin = ModAPI.LoadTexture("assets/default_skin_female.png");
-        FemaleFlesh = ModAPI.LoadTexture("assets/default_flesh_female.png");
-        FemaleBone = ModAPI.LoadTexture("assets/default_bone_female.png");
-        CoolGuySkin = ModAPI.LoadTexture("assets/default_skin_cool.png");
-        MaleSkin = ModAPI.LoadTexture("assets/default_skin_male.png");
-        MaleFlesh = ModAPI.LoadTexture("assets/default_flesh_male.png");
-        MaleBone = ModAPI.LoadTexture("assets/default_bone_male.png");
 
-        FemaleFurrySkin = ModAPI.LoadTexture("assets/default_skin_furry_female.png");
-        MaleFurrySkin = ModAPI.LoadTexture("assets/default_skin_furry_male.png");
 
-        FishSkinFemale = ModAPI.LoadTexture("assets/default_skin_fish_female.png");
-        FishSkinMale = ModAPI.LoadTexture("assets/default_skin_fish_male.png");
-        FishFlesh = ModAPI.LoadTexture("assets/default_flesh_fish.png");
-        FishBone = ModAPI.LoadTexture("assets/default_bone_fish.png");
-
-        ProtoSkinFemale = ModAPI.LoadTexture("assets/proto_skin_female.png");
-        ProtoSkinMale = ModAPI.LoadTexture("assets/proto_skin_male.png");
-        ProtoFlesh = ModAPI.LoadTexture("assets/proto_flesh.png");
-        ProtoBone = ModAPI.LoadTexture("assets/proto_bone.png");
-
-        ChadSkin = ModAPI.LoadTexture("assets/skin_chad.png");
-
-        SnakeBones = ModAPI.LoadTexture("assets/snake_skeleton.png");
-        SnakeFlesh = ModAPI.LoadTexture("assets/snake_flesh.png");
-        SnakeSkinMale = ModAPI.LoadTexture("assets/snake_skin_male.png");
-        SnakeSkinFemale = ModAPI.LoadTexture("assets/snake_skin_female.png");
-
-        CosmicFleshMale = ModAPI.LoadTexture("assets/flesh_cosmic_male.png");
-        CosmicFleshFemale = ModAPI.LoadTexture("assets/flesh_cosmic_female.png");
-        CosmicBone = ModAPI.LoadTexture("assets/bone_cosmic.png");
-
-        GoblinSkinFemale = ModAPI.LoadTexture("assets/default_skin_goblin_female.png");
-        GoblinSkinMale = ModAPI.LoadTexture("assets/default_skin_goblin_male.png");
+        Skins = new Dictionary<string, Texture2D>(){
+            //female
+            {"FemaleSkin", ModAPI.LoadTexture("assets/default_skin_female.png")},
+            {"FemaleFlesh", ModAPI.LoadTexture("assets/default_flesh_female.png")},
+            {"FemaleBone", ModAPI.LoadTexture("assets/default_bone_female.png")},
+            //male
+            {"CoolGuySkin", ModAPI.LoadTexture("assets/default_skin_cool.png")},
+            {"MaleSkin", ModAPI.LoadTexture("assets/default_skin_male.png")},
+            {"MaleFlesh", ModAPI.LoadTexture("assets/default_flesh_male.png")},
+            {"MaleBone", ModAPI.LoadTexture("assets/default_bone_male.png")},
+            //furry canine
+            {"FemaleFurrySkin", ModAPI.LoadTexture("assets/default_skin_furry_female.png")},
+            {"MaleFurrySkin", ModAPI.LoadTexture("assets/default_skin_furry_male.png")},
+            //fish - shark
+            {"FishSkinFemale", ModAPI.LoadTexture("assets/default_skin_fish_female.png")},
+            {"FishSkinMale", ModAPI.LoadTexture("assets/default_skin_fish_male.png")},
+            {"FishFlesh", ModAPI.LoadTexture("assets/default_flesh_fish.png")},
+            {"FishBone", ModAPI.LoadTexture("assets/default_bone_fish.png")},
+            //protogen
+            {"ProtoSkinFemale", ModAPI.LoadTexture("assets/proto_skin_female.png")},
+            {"ProtoSkinMale", ModAPI.LoadTexture("assets/proto_skin_male.png")},
+            {"ProtoFlesh", ModAPI.LoadTexture("assets/proto_flesh.png")},
+            {"ProtoBone", ModAPI.LoadTexture("assets/proto_bone.png")},
+            //chad
+            {"ChadSkin", ModAPI.LoadTexture("assets/skin_chad.png")},
+            //snakes
+            {"SnakeBones", ModAPI.LoadTexture("assets/snake_skeleton.png")},
+            {"SnakeFlesh", ModAPI.LoadTexture("assets/snake_flesh.png")},
+            {"SnakeSkinMale", ModAPI.LoadTexture("assets/snake_skin_male.png")},
+            {"SnakeSkinFemale", ModAPI.LoadTexture("assets/snake_skin_female.png")},
+            //cosmic
+            {"CosmicFleshMale", ModAPI.LoadTexture("assets/flesh_cosmic_male.png")},
+            {"CosmicFleshFemale", ModAPI.LoadTexture("assets/flesh_cosmic_female.png")},
+            {"CosmicBone", ModAPI.LoadTexture("assets/bone_cosmic.png")},
+            //goblins
+            {"GoblinSkinFemale", ModAPI.LoadTexture("assets/default_skin_goblin_female.png")},
+            {"GoblinSkinMale", ModAPI.LoadTexture("assets/default_skin_goblin_male.png")}
+        };
+        //FemaleSkin = ModAPI.LoadTexture("assets/default_skin_female.png");
+        //FemaleFlesh = ModAPI.LoadTexture("assets/default_flesh_female.png");
+        //FemaleBone = ModAPI.LoadTexture("assets/default_bone_female.png");
+        // CoolGuySkin = ModAPI.LoadTexture("assets/default_skin_cool.png");
+        // MaleSkin = ModAPI.LoadTexture("assets/default_skin_male.png");
+        // MaleFlesh = ModAPI.LoadTexture("assets/default_flesh_male.png");
+        // MaleBone = ModAPI.LoadTexture("assets/default_bone_male.png");
+        // FemaleFurrySkin = ModAPI.LoadTexture("assets/default_skin_furry_female.png");
+        // MaleFurrySkin = ModAPI.LoadTexture("assets/default_skin_furry_male.png");
+        // FishSkinFemale = ModAPI.LoadTexture("assets/default_skin_fish_female.png");
+        // FishSkinMale = ModAPI.LoadTexture("assets/default_skin_fish_male.png");
+        // FishFlesh = ModAPI.LoadTexture("assets/default_flesh_fish.png");
+        // FishBone = ModAPI.LoadTexture("assets/default_bone_fish.png");
+        // ProtoSkinFemale = ModAPI.LoadTexture("assets/proto_skin_female.png");
+        // ProtoSkinMale = ModAPI.LoadTexture("assets/proto_skin_male.png");
+        // ProtoFlesh = ModAPI.LoadTexture("assets/proto_flesh.png");
+        // ProtoBone = ModAPI.LoadTexture("assets/proto_bone.png");
+        // ChadSkin = ModAPI.LoadTexture("assets/skin_chad.png");
+        // SnakeBones = ModAPI.LoadTexture("assets/snake_skeleton.png");
+        // SnakeFlesh = ModAPI.LoadTexture("assets/snake_flesh.png");
+        // SnakeSkinMale = ModAPI.LoadTexture("assets/snake_skin_male.png");
+        // SnakeSkinFemale = ModAPI.LoadTexture("assets/snake_skin_female.png");
+        // CosmicFleshMale = ModAPI.LoadTexture("assets/flesh_cosmic_male.png");
+        // CosmicFleshFemale = ModAPI.LoadTexture("assets/flesh_cosmic_female.png");
+        // CosmicBone = ModAPI.LoadTexture("assets/bone_cosmic.png");
+        // GoblinSkinFemale = ModAPI.LoadTexture("assets/default_skin_goblin_female.png");
+        // GoblinSkinMale = ModAPI.LoadTexture("assets/default_skin_goblin_male.png");
 
         DevNullSprite = ModAPI.LoadSprite("assets/dev_void.png");
 

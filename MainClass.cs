@@ -149,7 +149,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.FemaleSkin, ADVCassets.FemaleFlesh, ADVCassets.FemaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["FemaleSkin"], ADVCassets.Skins["FemaleFlesh"], ADVCassets.Skins["FemaleBone"]);
                             }
                         }
                 );
@@ -197,7 +197,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.MaleSkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleSkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -245,7 +245,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.MaleSkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleSkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -293,7 +293,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.MaleSkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleSkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -355,7 +355,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.MaleFurrySkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleFurrySkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -416,7 +416,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.FemaleFurrySkin, ADVCassets.FemaleFlesh, ADVCassets.FemaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["FemaleFurrySkin"], ADVCassets.Skins["FemaleFlesh"], ADVCassets.Skins["FemaleBone"]);
                             }
                         }
                 );
@@ -506,7 +506,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.ChadSkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["ChadSkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -579,7 +579,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.FishSkinMale, ADVCassets.FishFlesh, ADVCassets.FishBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["FishSkinMale"], ADVCassets.Skins["FishFlesh"], ADVCassets.Skins["FishBone"]);
                             }
                         }
                 );
@@ -647,7 +647,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.FishSkinFemale, ADVCassets.FishFlesh, ADVCassets.FishBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["FishSkinFemale"], ADVCassets.Skins["FishFlesh"], ADVCassets.Skins["FishBone"]);
                             }
                         }
                 );
@@ -752,7 +752,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.ProtoSkinMale, ADVCassets.ProtoFlesh, ADVCassets.ProtoBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["ProtoSkinMale"], ADVCassets.Skins["ProtoFlesh"], ADVCassets.Skins["ProtoBone"]);
                             }
                         }
                 );
@@ -846,7 +846,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.ProtoSkinFemale, ADVCassets.ProtoFlesh, ADVCassets.ProtoBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["ProtoSkinFemale"], ADVCassets.Skins["ProtoFlesh"], ADVCassets.Skins["ProtoBone"]);
                             }
                         }
                 );
@@ -912,7 +912,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.SnakeSkinMale, ADVCassets.SnakeFlesh, ADVCassets.SnakeBones);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["SnakeSkinMale"], ADVCassets.Skins["SnakeFlesh"], ADVCassets.Skins["SnakeBones"]);
                             }
                         }
                 );
@@ -976,7 +976,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.SnakeSkinFemale, ADVCassets.SnakeFlesh, ADVCassets.SnakeBones);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["SnakeSkinFemale"], ADVCassets.Skins["SnakeFlesh"], ADVCassets.Skins["SnakeBones"]);
                             }
                         }
                 );
@@ -1024,7 +1024,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.CoolGuySkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["CoolGuySkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -1088,7 +1088,7 @@ namespace Mod
                                 }
                             }
                             SetArousalNets(GetArousalNets(GenderHuman));
-                            GenderHuman.SetBodyTextures(ADVCassets.FemaleSkin, ADVCassets.CosmicFleshFemale, ADVCassets.CosmicBone);
+                            GenderHuman.SetBodyTextures(ADVCassets.Skins["FemaleSkin"], ADVCassets.Skins["CosmicFleshFemale"], ADVCassets.Skins["CosmicBone"]);
                         }
                     }
             );
@@ -1147,7 +1147,7 @@ namespace Mod
                                 }
                             }
                             SetArousalNets(GetArousalNets(GenderHuman));
-                            GenderHuman.SetBodyTextures(ADVCassets.MaleSkin, ADVCassets.CosmicFleshMale, ADVCassets.CosmicBone);
+                            GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleSkin"], ADVCassets.Skins["CosmicFleshMale"], ADVCassets.Skins["CosmicBone"]);
                         }
                     }
             );
@@ -1209,7 +1209,7 @@ namespace Mod
                             }
                         }
                         SetArousalNets(GetArousalNets(GenderHuman));
-                        GenderHuman.SetBodyTextures(ADVCassets.GoblinSkinMale, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                        GenderHuman.SetBodyTextures(ADVCassets.Skins["GoblinSkinMale"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                     }
                 }
             );
@@ -1276,7 +1276,7 @@ namespace Mod
                             }
                         }
                         SetArousalNets(GetArousalNets(GenderHuman));
-                        GenderHuman.SetBodyTextures(ADVCassets.GoblinSkinFemale, ADVCassets.FemaleFlesh, ADVCassets.FemaleBone);
+                        GenderHuman.SetBodyTextures(ADVCassets.Skins["GoblinSkinFemale"], ADVCassets.Skins["FemaleFlesh"], ADVCassets.Skins["FemaleBone"]);
                     }
                 }
             );
