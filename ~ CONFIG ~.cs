@@ -36,7 +36,7 @@ public struct Config
         
         Furry_Mode = false; //set to true if you want "Furry Mode", aka Cum is insanely overkill and orgasms last longer
 
-        Inflation = true; //if set to true, adds a context menu option to some parts for "inflation".
+        Inflation = false; //if set to true, adds a context menu option to some parts for "inflation".
         // why did i add this? idk, someone will probably like this feature, knowing you weirdos...
     }
 }
