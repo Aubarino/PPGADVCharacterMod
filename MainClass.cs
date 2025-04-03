@@ -95,8 +95,13 @@ namespace Mod
                     RegistDildo(5,"Biosynthetic Penis","A biosynthetic penis",4,true,ADVCassets.DickADV_Proto,4);
                     RegistDildo(6,"Snake Dildo","A anthropomorphic snake dildo",6,true,ADVCassets.DickADV_Snake,5);
                     RegistDildo(7,"Goblin Dildo","A dildo based on a goblin",5,false,null,6,3);
+                    RegistDildo(8,"Vulpine Dildo","A vulpine dildo with a knot",5,true,ADVCassets.DickADV_Fox,7);
                 }
-                RegistAllClothing();
+                if (Type.GetType("AubClothingObj") != null){
+                    RegistAllClothing();
+                }else{
+                    UnityEngine.Debug.LogError("Unable to load Aub's Clothing System on ADVC boot. Please make sure your ADVC config file is correctly setup, and that your ADVC Mod install is not corrupted or outdated.");
+                }
             }
         }
 
@@ -149,7 +154,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.FemaleSkin, ADVCassets.FemaleFlesh, ADVCassets.FemaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["FemaleSkin"], ADVCassets.Skins["FemaleFlesh"], ADVCassets.Skins["FemaleBone"]);
                             }
                         }
                 );
@@ -197,7 +202,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.MaleSkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleSkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -245,7 +250,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.MaleSkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleSkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -293,7 +298,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.MaleSkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleSkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -355,7 +360,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.MaleFurrySkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleFurrySkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -416,7 +421,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.FemaleFurrySkin, ADVCassets.FemaleFlesh, ADVCassets.FemaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["FemaleFurrySkin"], ADVCassets.Skins["FemaleFlesh"], ADVCassets.Skins["FemaleBone"]);
                             }
                         }
                 );
@@ -506,7 +511,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.ChadSkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["ChadSkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -579,7 +584,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.FishSkinMale, ADVCassets.FishFlesh, ADVCassets.FishBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["FishSkinMale"], ADVCassets.Skins["FishFlesh"], ADVCassets.Skins["FishBone"]);
                             }
                         }
                 );
@@ -647,7 +652,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.FishSkinFemale, ADVCassets.FishFlesh, ADVCassets.FishBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["FishSkinFemale"], ADVCassets.Skins["FishFlesh"], ADVCassets.Skins["FishBone"]);
                             }
                         }
                 );
@@ -669,6 +674,9 @@ namespace Mod
                                 // GenderHuman.SetThirdBruiseColor(165, 135, 119);
                                 // GenderHuman.SetBloodColour(219, 37, 37);
                                 GenderHuman.SetRottenColour(79, 63, 63);
+                                AubClothing clothingTemp = Instance.AddComponent<AubClothing>();
+                                clothingTemp.Digitigrade = true; //the legs are Digitigrade not human-like, in visuals
+
                                 foreach (var limb in GenderHuman.Limbs)
                                 {
                                     limb.RegenerationSpeed += 1f;
@@ -752,7 +760,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.ProtoSkinMale, ADVCassets.ProtoFlesh, ADVCassets.ProtoBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["ProtoSkinMale"], ADVCassets.Skins["ProtoFlesh"], ADVCassets.Skins["ProtoBone"]);
                             }
                         }
                 );
@@ -770,6 +778,9 @@ namespace Mod
                             {
                                 var GenderHuman = Instance.GetComponent<PersonBehaviour>();
                                 GenderHuman.SetRottenColour(79, 63, 63);
+                                AubClothing clothingTemp = Instance.AddComponent<AubClothing>();
+                                clothingTemp.Digitigrade = true; //the legs are Digitigrade not human-like, in visuals
+
                                 foreach (var limb in GenderHuman.Limbs)
                                 {
                                     limb.RegenerationSpeed += 1f;
@@ -846,7 +857,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.ProtoSkinFemale, ADVCassets.ProtoFlesh, ADVCassets.ProtoBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["ProtoSkinFemale"], ADVCassets.Skins["ProtoFlesh"], ADVCassets.Skins["ProtoBone"]);
                             }
                         }
                 );
@@ -912,7 +923,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.SnakeSkinMale, ADVCassets.SnakeFlesh, ADVCassets.SnakeBones);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["SnakeSkinMale"], ADVCassets.Skins["SnakeFlesh"], ADVCassets.Skins["SnakeBones"]);
                             }
                         }
                 );
@@ -976,7 +987,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.SnakeSkinFemale, ADVCassets.SnakeFlesh, ADVCassets.SnakeBones);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["SnakeSkinFemale"], ADVCassets.Skins["SnakeFlesh"], ADVCassets.Skins["SnakeBones"]);
                             }
                         }
                 );
@@ -1024,7 +1035,7 @@ namespace Mod
                                     }
                                 }
                                 SetArousalNets(GetArousalNets(GenderHuman));
-                                GenderHuman.SetBodyTextures(ADVCassets.CoolGuySkin, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                                GenderHuman.SetBodyTextures(ADVCassets.Skins["CoolGuySkin"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                             }
                         }
                 );
@@ -1088,7 +1099,7 @@ namespace Mod
                                 }
                             }
                             SetArousalNets(GetArousalNets(GenderHuman));
-                            GenderHuman.SetBodyTextures(ADVCassets.FemaleSkin, ADVCassets.CosmicFleshFemale, ADVCassets.CosmicBone);
+                            GenderHuman.SetBodyTextures(ADVCassets.Skins["FemaleSkin"], ADVCassets.Skins["CosmicFleshFemale"], ADVCassets.Skins["CosmicBone"]);
                         }
                     }
             );
@@ -1147,7 +1158,7 @@ namespace Mod
                                 }
                             }
                             SetArousalNets(GetArousalNets(GenderHuman));
-                            GenderHuman.SetBodyTextures(ADVCassets.MaleSkin, ADVCassets.CosmicFleshMale, ADVCassets.CosmicBone);
+                            GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleSkin"], ADVCassets.Skins["CosmicFleshMale"], ADVCassets.Skins["CosmicBone"]);
                         }
                     }
             );
@@ -1209,7 +1220,7 @@ namespace Mod
                             }
                         }
                         SetArousalNets(GetArousalNets(GenderHuman));
-                        GenderHuman.SetBodyTextures(ADVCassets.GoblinSkinMale, ADVCassets.MaleFlesh, ADVCassets.MaleBone);
+                        GenderHuman.SetBodyTextures(ADVCassets.Skins["GoblinSkinMale"], ADVCassets.Skins["MaleFlesh"], ADVCassets.Skins["MaleBone"]);
                     }
                 }
             );
@@ -1276,7 +1287,130 @@ namespace Mod
                             }
                         }
                         SetArousalNets(GetArousalNets(GenderHuman));
-                        GenderHuman.SetBodyTextures(ADVCassets.GoblinSkinFemale, ADVCassets.FemaleFlesh, ADVCassets.FemaleBone);
+                        GenderHuman.SetBodyTextures(ADVCassets.Skins["GoblinSkinFemale"], ADVCassets.Skins["FemaleFlesh"], ADVCassets.Skins["FemaleBone"]);
+                    }
+                }
+            );
+        //anthro vulpine male
+            ModAPI.Register(
+                new Modification(){
+                    OriginalItem = ModAPI.FindSpawnable("Human"),
+                    NameOverride = "Male Anthro Fox",
+                    NameToOrderByOverride = "!!!!!anthro_vulpine_male_s1",
+                    DescriptionOverride = "Anthropomorphic Male Vulpine Character",
+                    CategoryOverride = ModAPI.FindCategory("ACM"),
+                    ThumbnailOverride = ModAPI.LoadSprite("assets/icons/fox_male.png"),
+                    AfterSpawn = (Instance) =>
+                    {
+                        var GenderHuman = Instance.GetComponent<PersonBehaviour>();
+                        AubClothing clothingTemp = Instance.AddComponent<AubClothing>();
+                        clothingTemp.Digitigrade = true; //the legs are Digitigrade not human-like, in visuals
+
+                        foreach (var limb in GenderHuman.Limbs){
+                            limb.SpeciesIdentity = "Vulpine";
+                            switch(limb.gameObject.name){
+                            case "LowerBody":
+                                var Crotch = limb.gameObject.AddComponent<LimbAddon>();
+                                Crotch.HasAss = true;
+                                MakeFuckable(limb.gameObject,"male");
+                                Crotch.IsOrgasmSource = true;
+                                Crotch.OrgasmSourceFuckable = true;
+
+                                Crotch.Instance = limb.gameObject;
+                                Crotch.Dick = true;
+                                Crotch.DickModel = 1;
+                                Crotch.DModelAdv = true;
+                                Crotch.DModelAdvSprites = ADVCassets.DickADV_Fox;
+                                Crotch.DickLength = 5; //1 less then the total dick length of the adv dick, as we're ignoring the Dick Base part of it.
+                                Crotch.DoDickAudio = true;
+
+                                Crotch.Tail = true;
+                                Crotch.TailModel = 6;
+                                Crotch.DmgVari_Tail = ADVCassets.TailDmg[5];
+
+                                Crotch.Balls = true;
+                                Crotch.BallsModel = 7;
+                                break;
+                            case "Head":
+                                var Head = limb.gameObject.AddComponent<LimbAddon>();
+                                Head.Instance = limb.gameObject;
+                                Head.CanBlush = true;
+                                Head.BlushModel = 11;
+
+                                Head.Ears = true;
+                                Head.EarModel = 2;
+
+                                Head.Overlay = true;
+                                Head.OverlayModel = 19;
+                                Head.OverlaySortNum = 1;
+                                break;
+                            default:
+                                break;
+                            }
+                        }
+                        SetArousalNets(GetArousalNets(GenderHuman));
+                        GenderHuman.SetBodyTextures(ADVCassets.Skins["MaleFoxSkin"], ADVCassets.Skins["FoxFleshMale"], ADVCassets.Skins["FoxBoneMale"]);
+                    }
+                }
+            );
+            //anthro vulpine female
+            ModAPI.Register(
+                new Modification(){
+                    OriginalItem = ModAPI.FindSpawnable("Human"),
+                    NameOverride = "Female Anthro Fox",
+                    NameToOrderByOverride = "!!!!!anthro_vulpine_female_s1",
+                    DescriptionOverride = "Anthropomorphic Female Vulpine Character",
+                    CategoryOverride = ModAPI.FindCategory("ACM"),
+                    ThumbnailOverride = ModAPI.LoadSprite("assets/icons/fox_female.png"),
+                    AfterSpawn = (Instance) =>
+                    {
+                        var GenderHuman = Instance.GetComponent<PersonBehaviour>();
+                        AubClothing clothingTemp = Instance.AddComponent<AubClothing>();
+                        clothingTemp.Digitigrade = true; //the legs are Digitigrade not human-like, in visuals
+
+                        foreach (var limb in GenderHuman.Limbs){
+                            limb.SpeciesIdentity = "Vulpine";
+                            switch(limb.gameObject.name){
+                            case "UpperBody":
+                                var Chest = limb.gameObject.AddComponent<LimbAddon>();
+                                Chest.Instance = limb.gameObject;
+                                Chest.Tits = true;
+                                Chest.TitsModel = 6;
+                                break;
+                            case "LowerBody":
+                                var Crotch = limb.gameObject.AddComponent<LimbAddon>();
+                                Crotch.Instance = limb.gameObject;
+                                Crotch.HasPussy = true;
+                                Crotch.HasAss = true;
+
+                                Crotch.Tail = true;
+                                Crotch.TailModel = 6;
+                                Crotch.DmgVari_Tail = ADVCassets.TailDmg[5];
+
+                                MakeFuckable(limb.gameObject,"female");
+                                Crotch.IsOrgasmSource = true;
+                                Crotch.OrgasmSourceFuckable = true;
+                                break;
+                            case "Head":
+                                var Head = limb.gameObject.AddComponent<LimbAddon>();
+                                Head.Instance = limb.gameObject;
+                                Head.CanBlush = true;
+                                Head.BlushModel = 11;
+                                Head.MoanSource = true; //experimental
+
+                                Head.Ears = true;
+                                Head.EarModel = 2;
+
+                                Head.Overlay = true;
+                                Head.OverlayModel = 19;
+                                Head.OverlaySortNum = 1;
+                                break;
+                            default:
+                                break;
+                            }
+                        }
+                        SetArousalNets(GetArousalNets(GenderHuman));
+                        GenderHuman.SetBodyTextures(ADVCassets.Skins["FemaleFoxSkin"], ADVCassets.Skins["FoxFleshFemale"], ADVCassets.Skins["FoxBoneFemale"]);
                     }
                 }
             );

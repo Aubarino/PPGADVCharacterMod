@@ -30,46 +30,42 @@ public struct ADVCassets
 
     public static Sprite[] ClothingIconTextures;
     public static Texture2D[] ClothingTexTextures;
+    public static Texture2D[] ClothingTexDigiTextures;
     public static Sprite[] ClothingObjTextures;
     public static int[] ClothingSlotIds;
     public static string[] ClothingNameIds;
     public static string[] ClothingDescs;
     public static bool[] ClothingNsfwStatus;
 
-    public static Texture2D FemaleSkin;
-    public static Texture2D FemaleFlesh;
-    public static Texture2D FemaleBone;
-    public static Texture2D CoolGuySkin;
-    public static Texture2D MaleSkin;
-    public static Texture2D MaleFlesh;
-    public static Texture2D MaleBone;
+    public static Dictionary<string, Texture2D> Skins = new Dictionary<string, Texture2D>();
 
-    public static Texture2D FemaleFurrySkin;
-    public static Texture2D MaleFurrySkin;
-
-    public static Texture2D FishSkinFemale;
-    public static Texture2D FishSkinMale;
-    public static Texture2D FishFlesh;
-    public static Texture2D FishBone;
-
-    public static Texture2D ProtoSkinMale;
-    public static Texture2D ProtoSkinFemale;
-    public static Texture2D ProtoFlesh;
-    public static Texture2D ProtoBone;
-
-    public static Texture2D ChadSkin;
-
-    public static Texture2D SnakeBones;
-    public static Texture2D SnakeSkinMale;
-    public static Texture2D SnakeSkinFemale;
-    public static Texture2D SnakeFlesh;
-
-    public static Texture2D CosmicFleshMale;
-    public static Texture2D CosmicFleshFemale;
-    public static Texture2D CosmicBone;
-
-    public static Texture2D GoblinSkinFemale;
-    public static Texture2D GoblinSkinMale;
+    // public static Texture2D FemaleSkin;
+    // public static Texture2D FemaleFlesh;
+    // public static Texture2D FemaleBone;
+    // public static Texture2D CoolGuySkin;
+    // public static Texture2D MaleSkin;
+    // public static Texture2D MaleFlesh;
+    // public static Texture2D MaleBone;
+    // public static Texture2D FemaleFurrySkin;
+    // public static Texture2D MaleFurrySkin;
+    // public static Texture2D FishSkinFemale;
+    // public static Texture2D FishSkinMale;
+    // public static Texture2D FishFlesh;
+    // public static Texture2D FishBone;
+    // public static Texture2D ProtoSkinMale;
+    // public static Texture2D ProtoSkinFemale;
+    // public static Texture2D ProtoFlesh;
+    // public static Texture2D ProtoBone;
+    // public static Texture2D ChadSkin;
+    // public static Texture2D SnakeBones;
+    // public static Texture2D SnakeSkinMale;
+    // public static Texture2D SnakeSkinFemale;
+    // public static Texture2D SnakeFlesh;
+    // public static Texture2D CosmicFleshMale;
+    // public static Texture2D CosmicFleshFemale;
+    // public static Texture2D CosmicBone;
+    // public static Texture2D GoblinSkinFemale;
+    // public static Texture2D GoblinSkinMale;
 
     public static Sprite DevNullSprite;
 
@@ -103,6 +99,7 @@ public struct ADVCassets
     public static Sprite[] DickADV_Fish;
     public static Sprite[] DickADV_Proto;
     public static Sprite[] DickADV_Snake;
+    public static Sprite[] DickADV_Fox;
 
     //Overlays
     public static Sprite[] Overlays;
@@ -119,11 +116,13 @@ public struct ADVCassets
         DickADV_Fish = CollectDickADV(2, 8);
         DickADV_Proto = CollectDickADV(3, 5);
         DickADV_Snake = CollectDickADV(4, 7);
-        Overlays = GenOverlays(18); //sets up overlays from "assets\overlays", increasing in number up to the max here.
+        DickADV_Fox = CollectDickADV(5, 6);
+        Overlays = GenOverlays(19); //sets up overlays from "assets\overlays", increasing in number up to the max here.
         ParticleTextures = GenParticleTextures(5);
 
         ClothingIconTextures = new Sprite[]{};
         ClothingTexTextures = new Texture2D[]{};
+        ClothingTexDigiTextures = new Texture2D[]{};
         ClothingObjTextures = new Sprite[]{};
         ClothingSlotIds = new int[]{};
         ClothingNameIds = new string[]{};
@@ -135,11 +134,13 @@ public struct ADVCassets
         LoadClothingTextureSet("sunglasses","Sunglasses",2,"Shades for looking cool"); //2 is eyes
         LoadClothingTextureSet("catpaw","Cat Paw Gloves",3,"Nya nya nya! paw gloves"); //3 is hands
         LoadClothingTextureSet("partyglasses","Party Glasses",2,"Pink plastic party glasses");
-        LoadClothingTextureSet("fakebeard","Fake Beard",1,"A low quality fake beard, feels like plastic");
+        LoadClothingTextureSet("fakebeard","Fake Beard",7,"A low quality fake beard, feels like plastic"); //7 is mouth
         LoadClothingTextureSet("balaclava","Balaclava",4,"A Balaclava, we need to put a team together >:)"); //4 is head
         LoadClothingTextureSet("funnyeye","Plastic Eye",2,"A funny plastic eye for gags and jokes");
         LoadClothingTextureSet("blindfold","Blindfold",2,"A Blindfold, for if you need to make someone unable to see");
         LoadClothingTextureSet("leatherjacket","Leather Jacket",5,"A cool leather jacket"); //5 is shirt
+        LoadClothingTextureSet("thighhighs","Thigh Highs (Black)",6,"Thigh highs, leg warmers, in a classic black color.",false,true); //6 is legs
+        LoadClothingTextureSet("thighhighs_pink","Thigh Highs (Pink)",6,"Thigh highs, leg warmers, in a pink color",false,true);
 
         FleshLights = new[]{
             ModAPI.LoadSprite("assets/objs/fleshlight_1.png")
@@ -174,40 +175,80 @@ public struct ADVCassets
         MoanGoblinMale = CollectAudioArray("moan_male_goblin",5);
         MoanGoblinFemale = CollectAudioArray("moan_female_goblin",5);
 
-        FemaleSkin = ModAPI.LoadTexture("assets/default_skin_female.png");
-        FemaleFlesh = ModAPI.LoadTexture("assets/default_flesh_female.png");
-        FemaleBone = ModAPI.LoadTexture("assets/default_bone_female.png");
-        CoolGuySkin = ModAPI.LoadTexture("assets/default_skin_cool.png");
-        MaleSkin = ModAPI.LoadTexture("assets/default_skin_male.png");
-        MaleFlesh = ModAPI.LoadTexture("assets/default_flesh_male.png");
-        MaleBone = ModAPI.LoadTexture("assets/default_bone_male.png");
 
-        FemaleFurrySkin = ModAPI.LoadTexture("assets/default_skin_furry_female.png");
-        MaleFurrySkin = ModAPI.LoadTexture("assets/default_skin_furry_male.png");
 
-        FishSkinFemale = ModAPI.LoadTexture("assets/default_skin_fish_female.png");
-        FishSkinMale = ModAPI.LoadTexture("assets/default_skin_fish_male.png");
-        FishFlesh = ModAPI.LoadTexture("assets/default_flesh_fish.png");
-        FishBone = ModAPI.LoadTexture("assets/default_bone_fish.png");
-
-        ProtoSkinFemale = ModAPI.LoadTexture("assets/proto_skin_female.png");
-        ProtoSkinMale = ModAPI.LoadTexture("assets/proto_skin_male.png");
-        ProtoFlesh = ModAPI.LoadTexture("assets/proto_flesh.png");
-        ProtoBone = ModAPI.LoadTexture("assets/proto_bone.png");
-
-        ChadSkin = ModAPI.LoadTexture("assets/skin_chad.png");
-
-        SnakeBones = ModAPI.LoadTexture("assets/snake_skeleton.png");
-        SnakeFlesh = ModAPI.LoadTexture("assets/snake_flesh.png");
-        SnakeSkinMale = ModAPI.LoadTexture("assets/snake_skin_male.png");
-        SnakeSkinFemale = ModAPI.LoadTexture("assets/snake_skin_female.png");
-
-        CosmicFleshMale = ModAPI.LoadTexture("assets/flesh_cosmic_male.png");
-        CosmicFleshFemale = ModAPI.LoadTexture("assets/flesh_cosmic_female.png");
-        CosmicBone = ModAPI.LoadTexture("assets/bone_cosmic.png");
-
-        GoblinSkinFemale = ModAPI.LoadTexture("assets/default_skin_goblin_female.png");
-        GoblinSkinMale = ModAPI.LoadTexture("assets/default_skin_goblin_male.png");
+        Skins = new Dictionary<string, Texture2D>(){
+            //female
+            {"FemaleSkin", ModAPI.LoadTexture("assets/default_skin_female.png")},
+            {"FemaleFlesh", ModAPI.LoadTexture("assets/default_flesh_female.png")},
+            {"FemaleBone", ModAPI.LoadTexture("assets/default_bone_female.png")},
+            //male
+            {"CoolGuySkin", ModAPI.LoadTexture("assets/default_skin_cool.png")},
+            {"MaleSkin", ModAPI.LoadTexture("assets/default_skin_male.png")},
+            {"MaleFlesh", ModAPI.LoadTexture("assets/default_flesh_male.png")},
+            {"MaleBone", ModAPI.LoadTexture("assets/default_bone_male.png")},
+            //furry canine
+            {"FemaleFurrySkin", ModAPI.LoadTexture("assets/default_skin_furry_female.png")},
+            {"MaleFurrySkin", ModAPI.LoadTexture("assets/default_skin_furry_male.png")},
+            //fish - shark
+            {"FishSkinFemale", ModAPI.LoadTexture("assets/default_skin_fish_female.png")},
+            {"FishSkinMale", ModAPI.LoadTexture("assets/default_skin_fish_male.png")},
+            {"FishFlesh", ModAPI.LoadTexture("assets/default_flesh_fish.png")},
+            {"FishBone", ModAPI.LoadTexture("assets/default_bone_fish.png")},
+            //protogen
+            {"ProtoSkinFemale", ModAPI.LoadTexture("assets/proto_skin_female.png")},
+            {"ProtoSkinMale", ModAPI.LoadTexture("assets/proto_skin_male.png")},
+            {"ProtoFlesh", ModAPI.LoadTexture("assets/proto_flesh.png")},
+            {"ProtoBone", ModAPI.LoadTexture("assets/proto_bone.png")},
+            //chad
+            {"ChadSkin", ModAPI.LoadTexture("assets/skin_chad.png")},
+            //snakes
+            {"SnakeBones", ModAPI.LoadTexture("assets/snake_skeleton.png")},
+            {"SnakeFlesh", ModAPI.LoadTexture("assets/snake_flesh.png")},
+            {"SnakeSkinMale", ModAPI.LoadTexture("assets/snake_skin_male.png")},
+            {"SnakeSkinFemale", ModAPI.LoadTexture("assets/snake_skin_female.png")},
+            //cosmic
+            {"CosmicFleshMale", ModAPI.LoadTexture("assets/flesh_cosmic_male.png")},
+            {"CosmicFleshFemale", ModAPI.LoadTexture("assets/flesh_cosmic_female.png")},
+            {"CosmicBone", ModAPI.LoadTexture("assets/bone_cosmic.png")},
+            //goblins
+            {"GoblinSkinFemale", ModAPI.LoadTexture("assets/default_skin_goblin_female.png")},
+            {"GoblinSkinMale", ModAPI.LoadTexture("assets/default_skin_goblin_male.png")},
+            //fox
+            {"FemaleFoxSkin", ModAPI.LoadTexture("assets/default_skin_fox_female.png")},
+            {"MaleFoxSkin", ModAPI.LoadTexture("assets/default_skin_fox_male.png")},
+            {"FoxFleshFemale", ModAPI.LoadTexture("assets/default_flesh_fox_female.png")},
+            {"FoxFleshMale", ModAPI.LoadTexture("assets/default_flesh_fox_male.png")},
+            {"FoxBoneFemale", ModAPI.LoadTexture("assets/default_bone_fox_female.png")},
+            {"FoxBoneMale", ModAPI.LoadTexture("assets/default_bone_fox_male.png")}
+        };
+        //FemaleSkin = ModAPI.LoadTexture("assets/default_skin_female.png");
+        //FemaleFlesh = ModAPI.LoadTexture("assets/default_flesh_female.png");
+        //FemaleBone = ModAPI.LoadTexture("assets/default_bone_female.png");
+        // CoolGuySkin = ModAPI.LoadTexture("assets/default_skin_cool.png");
+        // MaleSkin = ModAPI.LoadTexture("assets/default_skin_male.png");
+        // MaleFlesh = ModAPI.LoadTexture("assets/default_flesh_male.png");
+        // MaleBone = ModAPI.LoadTexture("assets/default_bone_male.png");
+        // FemaleFurrySkin = ModAPI.LoadTexture("assets/default_skin_furry_female.png");
+        // MaleFurrySkin = ModAPI.LoadTexture("assets/default_skin_furry_male.png");
+        // FishSkinFemale = ModAPI.LoadTexture("assets/default_skin_fish_female.png");
+        // FishSkinMale = ModAPI.LoadTexture("assets/default_skin_fish_male.png");
+        // FishFlesh = ModAPI.LoadTexture("assets/default_flesh_fish.png");
+        // FishBone = ModAPI.LoadTexture("assets/default_bone_fish.png");
+        // ProtoSkinFemale = ModAPI.LoadTexture("assets/proto_skin_female.png");
+        // ProtoSkinMale = ModAPI.LoadTexture("assets/proto_skin_male.png");
+        // ProtoFlesh = ModAPI.LoadTexture("assets/proto_flesh.png");
+        // ProtoBone = ModAPI.LoadTexture("assets/proto_bone.png");
+        // ChadSkin = ModAPI.LoadTexture("assets/skin_chad.png");
+        // SnakeBones = ModAPI.LoadTexture("assets/snake_skeleton.png");
+        // SnakeFlesh = ModAPI.LoadTexture("assets/snake_flesh.png");
+        // SnakeSkinMale = ModAPI.LoadTexture("assets/snake_skin_male.png");
+        // SnakeSkinFemale = ModAPI.LoadTexture("assets/snake_skin_female.png");
+        // CosmicFleshMale = ModAPI.LoadTexture("assets/flesh_cosmic_male.png");
+        // CosmicFleshFemale = ModAPI.LoadTexture("assets/flesh_cosmic_female.png");
+        // CosmicBone = ModAPI.LoadTexture("assets/bone_cosmic.png");
+        // GoblinSkinFemale = ModAPI.LoadTexture("assets/default_skin_goblin_female.png");
+        // GoblinSkinMale = ModAPI.LoadTexture("assets/default_skin_goblin_male.png");
 
         DevNullSprite = ModAPI.LoadSprite("assets/dev_void.png");
 
@@ -218,7 +259,8 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/objs/dildo_icon4.png"),
             ModAPI.LoadSprite("assets/objs/dildo_icon5.png"),
             ModAPI.LoadSprite("assets/objs/dildo_icon6.png"),
-            ModAPI.LoadSprite("assets/objs/dildo_icon7.png")
+            ModAPI.LoadSprite("assets/objs/dildo_icon7.png"),
+            ModAPI.LoadSprite("assets/objs/dildo_icon8.png")
         };
         DildoMain = new[]{
             ModAPI.LoadSprite("assets/objs/dildobase.png"),
@@ -230,14 +272,16 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/tit_2_body.png"),
             ModAPI.LoadSprite("assets/tit_3_body.png"),
             ModAPI.LoadSprite("assets/tit_4_body.png"),
-            ModAPI.LoadSprite("assets/tit_5_body.png")
+            ModAPI.LoadSprite("assets/tit_5_body.png"),
+            ModAPI.LoadSprite("assets/tit_6_body.png")
         };
         TitTips = new[]{
             ModAPI.LoadSprite("assets/tit_1_tip.png"),
             ModAPI.LoadSprite("assets/tit_2_tip.png"),
             ModAPI.LoadSprite("assets/tit_3_tip.png"),
             ModAPI.LoadSprite("assets/tit_4_tip.png"),
-            ModAPI.LoadSprite("assets/tit_5_tip.png")
+            ModAPI.LoadSprite("assets/tit_5_tip.png"),
+            ModAPI.LoadSprite("assets/tit_6_tip.png")
         };
 
         DickBases = new[]{
@@ -261,7 +305,8 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/fish_balls.png"),
             ModAPI.LoadSprite("assets/proto_balls.png"),
             ModAPI.LoadSprite("assets/snake_balls.png"),
-            ModAPI.LoadSprite("assets/dick_3_balls.png")
+            ModAPI.LoadSprite("assets/dick_3_balls.png"),
+            ModAPI.LoadSprite("assets/fox_balls.png")
         };
 
         Blush = new[]{
@@ -274,17 +319,20 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/blush_7.png"),
             ModAPI.LoadSprite("assets/blush_8.png"),
             ModAPI.LoadSprite("assets/blush_9.png"),
-            ModAPI.LoadSprite("assets/blush_10.png")
+            ModAPI.LoadSprite("assets/blush_10.png"),
+            ModAPI.LoadSprite("assets/blush_11.png")
         };
         LoveEyes = new[]{
             ModAPI.LoadSprite("assets/loveeyes_1.png")
         };
 
         EarLeft = new[]{
-            ModAPI.LoadSprite("assets/ear_1_left.png")
+            ModAPI.LoadSprite("assets/ear_1_left.png"),
+            ModAPI.LoadSprite("assets/ear_2_left.png")
         };
         EarRight = new[]{
-            ModAPI.LoadSprite("assets/ear_1_right.png")
+            ModAPI.LoadSprite("assets/ear_1_right.png"),
+            ModAPI.LoadSprite("assets/ear_2_right.png")
         };
         EarLarge = new[]{
             ModAPI.LoadSprite("assets/ear_large_1.png"),
@@ -296,21 +344,24 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/tails/tail_2_start.png"),
             ModAPI.LoadSprite("assets/tails/tail_3_start.png"),
             ModAPI.LoadSprite("assets/tails/tail_4_start.png"),
-            ModAPI.LoadSprite("assets/tails/tail_5_start.png")
+            ModAPI.LoadSprite("assets/tails/tail_5_start.png"),
+            ModAPI.LoadSprite("assets/tails/tail_6_start.png")
         };
         TailMid = new[]{
             ModAPI.LoadSprite("assets/tails/tail_1_mid.png"),
             ModAPI.LoadSprite("assets/tails/tail_2_mid.png"),
             ModAPI.LoadSprite("assets/tails/tail_3_mid.png"),
             ModAPI.LoadSprite("assets/tails/tail_4_mid.png"),
-            ModAPI.LoadSprite("assets/tails/tail_5_mid.png")
+            ModAPI.LoadSprite("assets/tails/tail_5_mid.png"),
+            ModAPI.LoadSprite("assets/tails/tail_6_mid.png")
         };
         TailTip = new[]{
             ModAPI.LoadSprite("assets/tails/tail_1_tip.png"),
             ModAPI.LoadSprite("assets/tails/tail_2_tip.png"),
             ModAPI.LoadSprite("assets/tails/tail_3_tip.png"),
             ModAPI.LoadSprite("assets/tails/tail_4_tip.png"),
-            ModAPI.LoadSprite("assets/tails/tail_5_tip.png")
+            ModAPI.LoadSprite("assets/tails/tail_5_tip.png"),
+            ModAPI.LoadSprite("assets/tails/tail_6_tip.png")
         };
         //damage stuff, idk
         TailDmg = new[]{
@@ -318,7 +369,8 @@ public struct ADVCassets
             ModAPI.LoadSprite("assets/tails/tail_2_destroyed.png"),
             ModAPI.LoadSprite("assets/tails/tail_3_destroyed.png"),
             ModAPI.LoadSprite("assets/tails/tail_4_destroyed.png"),
-            ModAPI.LoadSprite("assets/tails/tail_5_destroyed.png")
+            ModAPI.LoadSprite("assets/tails/tail_5_destroyed.png"),
+            ModAPI.LoadSprite("assets/tails/tail_6_destroyed.png")
         };
         //OTHER damage sprites...
         ChadDmgHairOverlay = ModAPI.LoadSprite("assets/overlays/5_dmg.png");
@@ -365,7 +417,7 @@ public struct ADVCassets
         return(TempParticles);
     }
 
-    public static void LoadClothingTextureSet(string clothingName,string visibleName = "undefined",int clothingSlotID = 0,string Description = "no description",bool nsfwClothing = false){
+    public static void LoadClothingTextureSet(string clothingName,string visibleName = "undefined",int clothingSlotID = 0,string Description = "no description",bool nsfwClothing = false,bool digiSupport = false){
         //Texture2D[] TempParticles = new Texture2D[] {};
         if(AAS.BootCore){
             ClothingObjTextures = ClothingObjTextures.Concat(new[] {ModAPI.LoadSprite("assets/clothing/" + clothingName + ".png")}).ToArray();
@@ -375,6 +427,10 @@ public struct ADVCassets
             ClothingNameIds = ClothingNameIds.Concat(new []{visibleName}).ToArray();
             ClothingDescs = ClothingDescs.Concat(new []{Description}).ToArray();
             ClothingNsfwStatus = ClothingNsfwStatus.Concat(new []{nsfwClothing}).ToArray();
+            if (digiSupport)
+                ClothingTexDigiTextures = ClothingTexDigiTextures.Concat(new[] {ModAPI.LoadTexture("assets/clothing/" + clothingName + "_tex_digi.png")}).ToArray();
+            else
+                ClothingTexDigiTextures = ClothingTexDigiTextures.Concat(new Texture2D[] {null}).ToArray();
         }
         //return(TempParticles);
     }
