@@ -16,3 +16,11 @@ has a slots system, and seamlessly works with any other mod, without needing to 
 - Made Clothing registering entirely automatic simply from what i define in ADVCassets.cs.
 - Cosmic Entities now float a little / slow down their physics supernaturally.
 - Other unlisted changes i forgot to note down.
+
+
+
+
+- Added the Fox species, male and female versions too.
+- changed assets to use a single dictionary instead of multiple Texture2D skin variables.
+- unrelated bug fixes
+X - added default moan audio handling for androids, so they now are different to the detected default of humans from other mods or sources.

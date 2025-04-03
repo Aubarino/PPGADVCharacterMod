@@ -97,7 +97,11 @@ namespace Mod
                     RegistDildo(7,"Goblin Dildo","A dildo based on a goblin",5,false,null,6,3);
                     RegistDildo(8,"Vulpine Dildo","A vulpine dildo with a knot",5,true,ADVCassets.DickADV_Fox,7);
                 }
-                RegistAllClothing();
+                if (Type.GetType("AubClothingObj") != null){
+                    RegistAllClothing();
+                }else{
+                    Debug.LogError("Unable to load Aub's Clothing System on ADVC boot. Please make sure your ADVC config file is correctly setup, and that your ADVC Mod install is not corrupted or outdated.");
+                }
             }
         }
 

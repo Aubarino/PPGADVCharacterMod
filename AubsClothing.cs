@@ -56,6 +56,7 @@ public class AubClothing : MonoBehaviour //add to a human's main object- not lim
 {
     //handles the clothing object itself
 
+    public bool Digitigrade = false; //applied if a advc character this is on- has standard alternate digitigrade legs instead of human legs
     public int[] clothingActiveIDs;
     public int[] clothingActiveSlots;
     public Texture2D[] clothingActiveTex;
