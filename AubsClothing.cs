@@ -17,13 +17,13 @@ public class AubClothingObj : MonoBehaviour //add to a clothing object
     public Sprite texIcon;
     public Sprite texObj;
 
-    private void Awake(){
+    // private void Awake(){
 
-    }
-    private void Start()
-    {
+    // }
+    // private void Start()
+    // {
 
-    }
+    // }
     
     public void OnCollisionEnter2D(Collision2D collision){
         //Debug.Log("Trying clothing ("+clothingVisibleName+") on ("+collision.gameObject.name+")");
@@ -38,6 +38,10 @@ public class AubClothingObj : MonoBehaviour //add to a clothing object
         if (clothingBehav == null){
             clothingBehav = collision.transform.root.gameObject.AddComponent<AubClothing>();
             if (collision.gameObject.GetComponent<CosmicRenderer>() != null) clothingBehav.CosmicMode = true;
+        }
+
+        if (clothingBehav.spriteRenderer == null){ //adjusted to be seperate check
+            if (collision.gameObject.GetComponent<CosmicRenderer>() != null) clothingBehav.CosmicMode = true;
             LimbBehaviour[] EveryLimb = collision.gameObject.GetComponent<LimbBehaviour>().Person.Limbs;
 
             for(int i = 0; i < EveryLimb.Length; i++){
@@ -47,6 +51,7 @@ public class AubClothingObj : MonoBehaviour //add to a clothing object
                 break;
             }
         }
+
         if (clothingBehav.CosmicMode) return; //if cosmic, skips the rest, no clothing for you lol
         if (clothingBehav.ApplyClothing(texBody,clothingIndex,clothingSlot)) Destroy(this.gameObject);
     }
@@ -118,7 +123,15 @@ public class AubClothing : MonoBehaviour //add to a human's main object- not lim
         height = texTemp.height;
 
         for(int clothingTexIn = 0; clothingTexIn < clothingActiveTex.Length; clothingTexIn++){
-            pixelsClothing = clothingActiveTex[clothingTexIn].GetPixels();
+            if (Digitigrade)
+                if (ADVCassets.ClothingTexDigiTextures[clothingActiveIDs[clothingTexIn]] == null){
+                    //UnityEngine.Debug.LogError("Unable to find Digitigrade version of clothing item ID " + clothingActiveIDs[clothingTexIn]);
+                    pixelsClothing = clothingActiveTex[clothingTexIn].GetPixels();
+                }else{
+                    pixelsClothing = ADVCassets.ClothingTexDigiTextures[clothingActiveIDs[clothingTexIn]].GetPixels();
+                }
+            else
+                pixelsClothing = clothingActiveTex[clothingTexIn].GetPixels();
 
             for (int y = 0; y < height; y++){
                 for (int x = 0; x < width; x++){

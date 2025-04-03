@@ -2,7 +2,7 @@
   "Name": "Advanced Character Mod",
   "Author": "Abyssal Studio",
   "Description": "A mod with possibly the most advanced limb and limb addon systems ever. The original mod with Jiggle Physics, full destruction support, and if editted to be NSFW Mode- this is the PPG Sex Mod.",
-  "ModVersion": "2.2",
+  "ModVersion": "2.3",
   "GameVersion": "1.23+",
   "ThumbnailPath": "Icon.png",
   "EntryPoint": "Mod.Mod",
@@ -17,7 +17,8 @@
     "AchievementJoke.cs",
     "LimbInspectOverhaul.cs",
     "PopupEntry.cs",
-    "CosmicEffect.cs"
+    "CosmicEffect.cs",
+    "AubsClothing.cs"
   ],
   "Active": true,
   "UGCIdentity": null,

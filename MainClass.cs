@@ -100,7 +100,7 @@ namespace Mod
                 if (Type.GetType("AubClothingObj") != null){
                     RegistAllClothing();
                 }else{
-                    Debug.LogError("Unable to load Aub's Clothing System on ADVC boot. Please make sure your ADVC config file is correctly setup, and that your ADVC Mod install is not corrupted or outdated.");
+                    UnityEngine.Debug.LogError("Unable to load Aub's Clothing System on ADVC boot. Please make sure your ADVC config file is correctly setup, and that your ADVC Mod install is not corrupted or outdated.");
                 }
             }
         }
@@ -674,6 +674,9 @@ namespace Mod
                                 // GenderHuman.SetThirdBruiseColor(165, 135, 119);
                                 // GenderHuman.SetBloodColour(219, 37, 37);
                                 GenderHuman.SetRottenColour(79, 63, 63);
+                                AubClothing clothingTemp = Instance.AddComponent<AubClothing>();
+                                clothingTemp.Digitigrade = true; //the legs are Digitigrade not human-like, in visuals
+
                                 foreach (var limb in GenderHuman.Limbs)
                                 {
                                     limb.RegenerationSpeed += 1f;
@@ -775,6 +778,9 @@ namespace Mod
                             {
                                 var GenderHuman = Instance.GetComponent<PersonBehaviour>();
                                 GenderHuman.SetRottenColour(79, 63, 63);
+                                AubClothing clothingTemp = Instance.AddComponent<AubClothing>();
+                                clothingTemp.Digitigrade = true; //the legs are Digitigrade not human-like, in visuals
+
                                 foreach (var limb in GenderHuman.Limbs)
                                 {
                                     limb.RegenerationSpeed += 1f;
@@ -1297,6 +1303,9 @@ namespace Mod
                     AfterSpawn = (Instance) =>
                     {
                         var GenderHuman = Instance.GetComponent<PersonBehaviour>();
+                        AubClothing clothingTemp = Instance.AddComponent<AubClothing>();
+                        clothingTemp.Digitigrade = true; //the legs are Digitigrade not human-like, in visuals
+
                         foreach (var limb in GenderHuman.Limbs){
                             limb.SpeciesIdentity = "Vulpine";
                             switch(limb.gameObject.name){
@@ -1356,6 +1365,9 @@ namespace Mod
                     AfterSpawn = (Instance) =>
                     {
                         var GenderHuman = Instance.GetComponent<PersonBehaviour>();
+                        AubClothing clothingTemp = Instance.AddComponent<AubClothing>();
+                        clothingTemp.Digitigrade = true; //the legs are Digitigrade not human-like, in visuals
+
                         foreach (var limb in GenderHuman.Limbs){
                             limb.SpeciesIdentity = "Vulpine";
                             switch(limb.gameObject.name){

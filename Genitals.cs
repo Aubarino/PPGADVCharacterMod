@@ -720,6 +720,16 @@ public class LimbAddonPart : MonoBehaviour //individual BodyPart
                 if (HitSurface.transform.gameObject.name.Contains("_cosmicfemale")) sexVal = 8;
                 if (HitSurface.transform.gameObject.name.Contains("_goblinmale")) sexVal = 9;
                 if (HitSurface.transform.gameObject.name.Contains("_goblinfemale")) sexVal = 10;
+                if (HitSurface.transform.GetComponent<LimbBehaviour>() != null && sexVal == 0){
+                    if (HitSurface.transform.GetComponent<LimbBehaviour>().SpeciesIdentity == "Android"){ //is default non-advc human an android
+                        if (HitSurface.transform.root.gameObject.name.Contains("female")) sexVal = 6;
+                        else sexVal = 5;
+                    }else{ //if is default non-advc human
+                        if (HitSurface.transform.root.gameObject.name.Contains("female")) sexVal = 2;
+                        else if (HitSurface.transform.root.gameObject.name.Contains("male")) sexVal = 1;
+                    }
+                }
+                //defaults sexval to 0 if no checks match
 
                 if (!(HostGenitals.DickIn)) DickEnterEvent(HitSurface.transform.gameObject,sexVal);
 

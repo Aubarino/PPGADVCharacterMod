@@ -30,6 +30,7 @@ public struct ADVCassets
 
     public static Sprite[] ClothingIconTextures;
     public static Texture2D[] ClothingTexTextures;
+    public static Texture2D[] ClothingTexDigiTextures;
     public static Sprite[] ClothingObjTextures;
     public static int[] ClothingSlotIds;
     public static string[] ClothingNameIds;
@@ -121,6 +122,7 @@ public struct ADVCassets
 
         ClothingIconTextures = new Sprite[]{};
         ClothingTexTextures = new Texture2D[]{};
+        ClothingTexDigiTextures = new Texture2D[]{};
         ClothingObjTextures = new Sprite[]{};
         ClothingSlotIds = new int[]{};
         ClothingNameIds = new string[]{};
@@ -132,11 +134,13 @@ public struct ADVCassets
         LoadClothingTextureSet("sunglasses","Sunglasses",2,"Shades for looking cool"); //2 is eyes
         LoadClothingTextureSet("catpaw","Cat Paw Gloves",3,"Nya nya nya! paw gloves"); //3 is hands
         LoadClothingTextureSet("partyglasses","Party Glasses",2,"Pink plastic party glasses");
-        LoadClothingTextureSet("fakebeard","Fake Beard",1,"A low quality fake beard, feels like plastic");
+        LoadClothingTextureSet("fakebeard","Fake Beard",7,"A low quality fake beard, feels like plastic"); //7 is mouth
         LoadClothingTextureSet("balaclava","Balaclava",4,"A Balaclava, we need to put a team together >:)"); //4 is head
         LoadClothingTextureSet("funnyeye","Plastic Eye",2,"A funny plastic eye for gags and jokes");
         LoadClothingTextureSet("blindfold","Blindfold",2,"A Blindfold, for if you need to make someone unable to see");
         LoadClothingTextureSet("leatherjacket","Leather Jacket",5,"A cool leather jacket"); //5 is shirt
+        LoadClothingTextureSet("thighhighs","Thigh Highs (Black)",6,"Thigh highs, leg warmers, in a classic black color.",false,true); //6 is legs
+        LoadClothingTextureSet("thighhighs_pink","Thigh Highs (Pink)",6,"Thigh highs, leg warmers, in a pink color",false,true);
 
         FleshLights = new[]{
             ModAPI.LoadSprite("assets/objs/fleshlight_1.png")
@@ -413,7 +417,7 @@ public struct ADVCassets
         return(TempParticles);
     }
 
-    public static void LoadClothingTextureSet(string clothingName,string visibleName = "undefined",int clothingSlotID = 0,string Description = "no description",bool nsfwClothing = false){
+    public static void LoadClothingTextureSet(string clothingName,string visibleName = "undefined",int clothingSlotID = 0,string Description = "no description",bool nsfwClothing = false,bool digiSupport = false){
         //Texture2D[] TempParticles = new Texture2D[] {};
         if(AAS.BootCore){
             ClothingObjTextures = ClothingObjTextures.Concat(new[] {ModAPI.LoadSprite("assets/clothing/" + clothingName + ".png")}).ToArray();
@@ -423,6 +427,10 @@ public struct ADVCassets
             ClothingNameIds = ClothingNameIds.Concat(new []{visibleName}).ToArray();
             ClothingDescs = ClothingDescs.Concat(new []{Description}).ToArray();
             ClothingNsfwStatus = ClothingNsfwStatus.Concat(new []{nsfwClothing}).ToArray();
+            if (digiSupport)
+                ClothingTexDigiTextures = ClothingTexDigiTextures.Concat(new[] {ModAPI.LoadTexture("assets/clothing/" + clothingName + "_tex_digi.png")}).ToArray();
+            else
+                ClothingTexDigiTextures = ClothingTexDigiTextures.Concat(new Texture2D[] {null}).ToArray();
         }
         //return(TempParticles);
     }
