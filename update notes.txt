@@ -1,18 +1,10 @@
-PPG Sex Mod 2.2 Update :
+PPG Sex Mod 2.3 Update :
 
-- Added Clothing, my own clothing system that generates textures in real time,
-has a slots system, and seamlessly works with any other mod, without needing to parent a child object. works with gore.
-- Added Goblins (male and female) including their respective NSFW mode items
-- Bug fix relating to Penetration checks, for object too.
-- Added more options to the ~ CONFIG ~.cs file, including a "Inflation" feature in the config that you can toggle if in NSFW Mode.
-- Made the cosmic rendering even more advanced, including trail effects that change according to physics- to flow better.
-- Reworked a lot of the LimbAddon for optimisation.
-- Other quality of life fixes...
-- Made a Github https://github.com/Aubarino/PPGADVCharacterMod for the mod.
-- Added Config file options for if in NSFW Mode; for Moan sounds, Cum sounds, and "Furry Mode"
-- Revised a lot of the censoring code for SFW Mode so its more stable now.
-- Reworked titty jiggle to be dependent on titty mass / the size of the rack.
-- Reworked the shaft penetration code tip prediction to be relative to the LimbAddon's scale while relative to the main object, including tits too.
-- Made Clothing registering entirely automatic simply from what i define in ADVCassets.cs.
-- Cosmic Entities now float a little / slow down their physics supernaturally.
-- Other unlisted changes i forgot to note down.
+- Added the Fox species, male and female versions too.
+- changed assets to use a single dictionary instead of multiple Texture2D skin variables.
+- unrelated bug fixes
+- Added default gendered audio handling for androids, humans from other mods / more detection methods for determining gender
+- Added extra check for a error relating to the AubClothing breaking randomly on specific mod boots, need more info on the error though.
+- Separated the spriteRenderer management in the AubClothingObj to not only apply on a body with no pre-existing clothing definition.
+- Added Digitigrade leg support for the Aubs Clothing system thing.
+- Added Thigh highs, in black and pink.
